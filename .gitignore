@@ -70,3 +70,5 @@ Thumbs.db
 
 /backend/src/project/target/
 /backend/src/target
+/backend/target
+target
