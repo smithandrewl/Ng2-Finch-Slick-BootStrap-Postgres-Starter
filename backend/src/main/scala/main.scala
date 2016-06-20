@@ -13,12 +13,13 @@ import com.twitter.util.{Await, Future}
 object Main extends TwitterServer {
   val api: Endpoint[String] = get("hello") { Ok("Hello World!")}
 
-
   def main() {
     val server = Http.serve(":8080", api.toService)
+
     onExit {
       server.close()
     }
+
     Await.ready(server)
   }
 }
