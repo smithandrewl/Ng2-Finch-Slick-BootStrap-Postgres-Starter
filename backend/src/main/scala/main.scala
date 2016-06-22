@@ -20,7 +20,7 @@ object Main extends TwitterServer {
       val users = tables.AuthDAO.getUsers()
 
       @volatile
-      var msg: Json = "".asJson
+      var msg: Json = Json.Null
 
       users.onComplete {
         case Success(usrs) => msg = usrs.asJson
@@ -32,9 +32,7 @@ object Main extends TwitterServer {
       }
 
       Ok(msg.toString())
-
     }
-
 
     val server = Http.serve(":8080", api.toService)
 
