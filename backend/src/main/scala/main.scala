@@ -36,6 +36,18 @@ object Main extends TwitterServer {
       Ok(msg.toString())
     }
 
+    val verifyJWT: Endpoint[String] = get("verify_jwt" :: string) {
+      (jwt: String) => {
+
+        val signature = new JsonWebSignature()
+
+        signature.setCompactSerialization(jwt)
+        signature.setKey(key)
+
+        Ok("" + signature.verifySignature())
+      }
+    }
+
     val authenticate: Endpoint[String] = get("authenticate" :: string :: string) {
       (username: String, hash: String) => {
 
@@ -66,7 +78,7 @@ object Main extends TwitterServer {
       }
     }
 
-    val server = Http.serve(":8080", (api :+: authenticate).toService)
+    val server = Http.serve(":8080", (api :+: authenticate :+: verifyJWT).toService)
 
     onExit { server.close() }
 
