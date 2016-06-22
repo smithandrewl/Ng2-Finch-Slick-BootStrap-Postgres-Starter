@@ -32,5 +32,9 @@ object tables {
     def getUsers()(implicit e: ExecutionContext): Future[Seq[Auth]] = {
       db.run(users.result)
     }
+
+    def verifyUser(username: String, hash: String): Future[Boolean] = {
+      return db.run(users.filter(user => user.username === username).filter(user => user.hash === hash).exists.result)
+    }
   }
 }
