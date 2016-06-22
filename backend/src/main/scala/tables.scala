@@ -9,8 +9,6 @@ import scala.concurrent.Future
 object tables {
   val db: Database = Database.forURL("jdbc:postgresql://localhost/many_tasks", user = "many_tasks_user", driver = "org.postgresql.Driver")
 
-
-
   class Auth(tag: Tag) extends Table[(Int, String, String, Boolean)](tag, "auth") {
     def authId   = column[Int]("authid", PrimaryKey)
     def username = column[String]("username")
@@ -25,9 +23,7 @@ object tables {
   object AuthDAO {
 
     def getUsers() (implicit e :ExecutionContext): Future[Seq[(Int, String, String, Boolean)]] = {
-
       db.run(users.result)
     }
-
   }
 }

@@ -1,11 +1,15 @@
 import com.twitter.finagle.Http
 import com.twitter.server.TwitterServer
 import com.twitter.util.{Await, Duration}
+import io.circe.Json
 import io.finch._
 import slick.driver.PostgresDriver.backend._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util._
+import io.circe.generic.auto._
+import io.circe.syntax._
+
 
 
 object Main extends TwitterServer {
@@ -15,12 +19,11 @@ object Main extends TwitterServer {
 
       val users = tables.AuthDAO.getUsers()
 
-      // users.onSuccess(usr => s"id = $usr.id name = $usr.name hash = $usr.hash isAdmin= $usr.isAdmin")
       @volatile
-      var msg: String = ""
+      var msg: Json = "".asJson
 
       users.onComplete {
-        case Success(usrs) => msg = "{\"id\":" + usrs(0)._1 + ", \"name\": \"" + usrs(0)._2 + "\", \"hash\": \"" + usrs(0)._3 + "\",  \"isAdmin\": \"" + usrs(0)._4 + "\"}"
+        case Success(usrs) => msg = usrs.asJson
         case Failure(e)    => e.printStackTrace()
       }
 
@@ -28,7 +31,7 @@ object Main extends TwitterServer {
         Thread.sleep(10)
       }
 
-      Ok(msg)
+      Ok(msg.toString())
 
     }
 
