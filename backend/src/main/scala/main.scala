@@ -10,9 +10,10 @@ import org.jose4j.keys.HmacKey
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util._
-
 import java.security.SecureRandom
 import java.math.BigInteger
+
+import com.twitter.finagle.param.Stats
 
 
 object Main extends TwitterServer {
@@ -78,7 +79,7 @@ object Main extends TwitterServer {
       }
     }
 
-    val server = Http.serve(":8080", (api :+: authenticate :+: verifyJWT).toService)
+    val server =  Http.server.configured(Stats(statsReceiver)).serve(":8080", (api :+: authenticate :+: verifyJWT).toService)
 
     onExit { server.close() }
 
