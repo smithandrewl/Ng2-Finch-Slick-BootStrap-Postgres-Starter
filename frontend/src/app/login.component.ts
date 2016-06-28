@@ -20,7 +20,7 @@ export class LoginAppComponent {
   };
 
   private auth(resp:Response) {
-    console.log("Auth response: " + resp.text());
+    alert("Auth response: " + resp.text());
     this.response = resp.text();
   }
 
