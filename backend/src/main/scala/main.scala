@@ -1,4 +1,4 @@
-import com.twitter.finagle.Http
+import com.twitter.finagle.{Http, Service}
 import com.twitter.server.TwitterServer
 import io.circe.generic.auto._
 import io.circe.syntax._
@@ -15,9 +15,11 @@ import com.twitter.bijection.Bijection
 import com.twitter.finagle.param.Stats
 import tables.Auth
 import com.twitter.bijection.twitter_util.UtilBijections._
+import com.twitter.finagle.http.{Request, Response}
+
 import scala.concurrent.Future
 import com.twitter.util.{Future => TwitterFuture}
-
+import com.twitter.finagle.http.filter.{Cors, CorsFilter}
 
 object Main extends TwitterServer {
   def main() {
@@ -47,7 +49,7 @@ object Main extends TwitterServer {
         val isCorrect = tables.AuthDAO.verifyUser(username, hash)
 
         @volatile
-        var msg: String = "no such username or incorrect password"
+        var msg: String =  "\"no such username or incorrect password\""
 
         isCorrect.onComplete {
           case Success(value) => {
@@ -71,7 +73,20 @@ object Main extends TwitterServer {
       }
     }
 
-    val server =  Http.server.configured(Stats(statsReceiver)).serve(":8080", (api :+: authenticate :+: verifyJWT).toService)
+    val policy: Cors.Policy = Cors.Policy(
+      allowsOrigin = _ => Some("*"),
+      allowsMethods = _ => Some(Seq("GET", "POST")),
+      allowsHeaders = _ => Some(Seq("Accept"))
+    )
+
+
+
+    val service: Service[Request, Response] = (api :+: authenticate :+: verifyJWT).toService
+    val corsService: Service[Request, Response] = new Cors.HttpFilter(policy).andThen(service)
+
+    val server =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
+
+
 
     onExit { server.close() }
 
