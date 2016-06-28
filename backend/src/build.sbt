@@ -25,3 +25,11 @@ libraryDependencies ++= Seq(
   "com.twitter"                %% "twitter-server"   % "1.20.0"
 )
 
+// https://mvnrepository.com/artifact/com.twitter/bijection-core_2.11
+libraryDependencies += "com.twitter" % "bijection-core_2.11" % "0.9.2"
+
+// https://mvnrepository.com/artifact/com.twitter/bijection-util_2.11
+libraryDependencies += "com.twitter" % "bijection-util_2.11" % "0.9.2"
+
+
+

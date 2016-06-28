@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/backend/backend.iml" filepath="$PROJECT_DIR$/backend/backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/database/database.iml" filepath="$PROJECT_DIR$/database/database.iml" />
       <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/backend/src/.idea/modules/src.iml" filepath="$PROJECT_DIR$/backend/src/.idea/modules/src.iml" />
       <module fileurl="file://$PROJECT_DIR$/backend/src/.idea/modules/src-build.iml" filepath="$PROJECT_DIR$/backend/src/.idea/modules/src-build.iml" />
     </modules>

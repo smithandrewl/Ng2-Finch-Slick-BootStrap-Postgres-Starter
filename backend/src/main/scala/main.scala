@@ -1,10 +1,8 @@
 import com.twitter.finagle.Http
 import com.twitter.server.TwitterServer
-import io.circe.Json
 import io.circe.generic.auto._
 import io.circe.syntax._
 import io.finch._
-import org.jose4j
 import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
 import org.jose4j.keys.HmacKey
 
@@ -13,7 +11,12 @@ import scala.util._
 import java.security.SecureRandom
 import java.math.BigInteger
 
+import com.twitter.bijection.Bijection
 import com.twitter.finagle.param.Stats
+import tables.Auth
+import com.twitter.bijection.twitter_util.UtilBijections._
+import scala.concurrent.Future
+import com.twitter.util.{Future => TwitterFuture}
 
 
 object Main extends TwitterServer {
@@ -21,20 +24,9 @@ object Main extends TwitterServer {
     val key: HmacKey = new HmacKey(new BigInteger(512, new SecureRandom()).toByteArray)
 
     val api: Endpoint[String] = get("users") {
+      val users: TwitterFuture[Seq[Auth]] =  Bijection[Future[Seq[Auth]],TwitterFuture[Seq[Auth]]](tables.AuthDAO.getUsers())
 
-      val users = tables.AuthDAO.getUsers()
-
-      @volatile
-      var msg: Json = Json.Null
-
-      users.onComplete {
-        case Success(usrs) => msg = usrs.asJson
-        case Failure(e)    => e.printStackTrace()
-      }
-
-      while (!users.isCompleted) Thread.sleep(10)
-
-      Ok(msg.toString())
+      Ok(users.map(usrs => usrs.asJson.toString()))
     }
 
     val verifyJWT: Endpoint[String] = get("verify_jwt" :: string) {
