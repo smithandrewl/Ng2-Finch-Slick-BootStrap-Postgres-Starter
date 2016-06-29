@@ -46,21 +46,21 @@ object Main extends TwitterServer {
     val authenticate: Endpoint[String] = get("authenticate" :: string :: string) {
       (username: String, hash: String) => {
 
-        val isCorrect: TwitterFuture[Boolean] = Bijection[Future[Boolean], TwitterFuture[Boolean]](tables.AuthDAO.verifyUser(username, hash))
+        val isCorrect: TwitterFuture[Option[Boolean]] = Bijection[Future[Option[Boolean]], TwitterFuture[Option[Boolean]]](tables.AuthDAO.verifyUser(username, hash))
 
-        isCorrect.map((va: Boolean) => va match {
-          case true => {
+        isCorrect.map((va: Option[Boolean]) => va match {
+          case Some(isAdmin) => {
             val signature = new JsonWebSignature()
 
-            signature.setPayload("payload")
+            signature.setPayload(s"IsAdmin: ${true}")
             signature.setAlgorithmHeaderValue(AlgorithmIdentifiers.HMAC_SHA512)
             signature.setHeader("type", "JWT")
 
             signature.setKey(key)
 
-            Ok(signature.getCompactSerialization())
+            Ok(signature.getCompactSerialization)
           }
-          case _ => Ok("no such username or incorrect password")
+          case None => Ok("no such username or incorrect password")
           }
         )
       }

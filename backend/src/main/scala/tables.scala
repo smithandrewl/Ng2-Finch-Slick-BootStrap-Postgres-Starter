@@ -1,9 +1,12 @@
+import com.twitter.util.Try
+import io.finch.Output.Failure
 import slick.ast.ColumnOption.PrimaryKey
 import slick.driver.PostgresDriver.api._
-
 import slick.lifted.{TableQuery, Tag}
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Success
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object tables {
   val db: Database = Database.forURL(
@@ -33,8 +36,10 @@ object tables {
       db.run(users.result)
     }
 
-    def verifyUser(username: String, hash: String): Future[Boolean] = {
-      return db.run(users.filter(user => user.username === username).filter(user => user.hash === hash).exists.result)
+    def verifyUser(username: String, hash: String): Future[Option[Boolean]] = {
+      db.run(users.filter(user => user.username === username).filter(user => user.hash === hash).exists.result).map(
+        (suc: Boolean) => if(suc) Some(true) else None
+      )
     }
   }
 }
