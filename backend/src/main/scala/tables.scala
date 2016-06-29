@@ -2,7 +2,7 @@ import com.twitter.util.Try
 import io.finch.Output.Failure
 import slick.ast.ColumnOption.PrimaryKey
 import slick.driver.PostgresDriver.api._
-import slick.lifted.{TableQuery, Tag}
+import slick.lifted.{ProvenShape, TableQuery, Tag}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Success
@@ -37,9 +37,15 @@ object tables {
     }
 
     def verifyUser(username: String, hash: String): Future[Option[Boolean]] = {
-      db.run(users.filter(user => user.username === username).filter(user => user.hash === hash).exists.result).map(
-        (suc: Boolean) => if(suc) Some(true) else None
-      )
+      val query = users.filter(user => user.username === username).filter(user => user.hash === hash).map(
+        (usr: AuthTable) => usr.isAdmin)
+
+      db.run(query.result).map{
+        (f:Seq[Boolean]) => f match {
+          case Vector(x) => Some(x)
+          case _  => None
+        }
+      }
     }
   }
 }
