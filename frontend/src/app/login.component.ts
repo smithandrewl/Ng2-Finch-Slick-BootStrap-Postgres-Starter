@@ -12,8 +12,8 @@ export class LoginAppComponent {
   username = '';
   password = '';
   response = '';
-  hidden='';
-
+  wasError = 'hidden';
+  isHidden = '';
   constructor(public http: Http) {}
 
   onClickSubmit() {
@@ -24,7 +24,10 @@ export class LoginAppComponent {
     this.response = resp.text();
 
     if(this.response != "no such username or incorrect password") {
-      this.hidden = 'hidden';
+      this.wasError = 'hidden';
+      this.isHidden='hidden';
+    } else {
+      this.wasError = '';
     }
     
   };
