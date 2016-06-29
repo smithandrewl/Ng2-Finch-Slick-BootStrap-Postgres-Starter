@@ -1,25 +1,22 @@
-import com.twitter.finagle.{Http, Service}
+import java.math.BigInteger
+import java.security.SecureRandom
+
+import com.twitter.bijection.Bijection
+import com.twitter.bijection.twitter_util.UtilBijections._
+import com.twitter.finagle.Http
+import com.twitter.finagle.http.filter.Cors
+import com.twitter.finagle.param.Stats
 import com.twitter.server.TwitterServer
+import com.twitter.util.{Future => TwitterFuture}
 import io.circe.generic.auto._
 import io.circe.syntax._
 import io.finch._
 import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
 import org.jose4j.keys.HmacKey
+import tables.Auth
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util._
-import java.security.SecureRandom
-import java.math.BigInteger
-
-import com.twitter.bijection.Bijection
-import com.twitter.finagle.param.Stats
-import tables.Auth
-import com.twitter.bijection.twitter_util.UtilBijections._
-import com.twitter.finagle.http.{Request, Response}
-
 import scala.concurrent.Future
-import com.twitter.util.{Future => TwitterFuture}
-import com.twitter.finagle.http.filter.{Cors, CorsFilter}
 
 object Main extends TwitterServer {
   def main() {
@@ -33,7 +30,6 @@ object Main extends TwitterServer {
 
     val verifyJWT: Endpoint[String] = get("verify_jwt" :: string) {
       (jwt: String) => {
-
         val signature = new JsonWebSignature()
 
         signature.setCompactSerialization(jwt)
@@ -45,14 +41,13 @@ object Main extends TwitterServer {
 
     val authenticate: Endpoint[String] = get("authenticate" :: string :: string) {
       (username: String, hash: String) => {
-
         val isCorrect: TwitterFuture[Option[Boolean]] = Bijection[Future[Option[Boolean]], TwitterFuture[Option[Boolean]]](tables.AuthDAO.verifyUser(username, hash))
 
-        isCorrect.map((va: Option[Boolean]) => va match {
+        isCorrect.map((user: Option[Boolean]) => user match {
           case Some(isAdmin) => {
             val signature = new JsonWebSignature()
 
-            signature.setPayload(s"IsAdmin: ${true}")
+            signature.setPayload(s"IsAdmin: $isAdmin")
             signature.setAlgorithmHeaderValue(AlgorithmIdentifiers.HMAC_SHA512)
             signature.setHeader("type", "JWT")
 
@@ -61,25 +56,20 @@ object Main extends TwitterServer {
             Ok(signature.getCompactSerialization)
           }
           case None => Ok("no such username or incorrect password")
-          }
+        }
         )
       }
     }
 
     val policy: Cors.Policy = Cors.Policy(
-      allowsOrigin = _ => Some("*"),
+      allowsOrigin  = _ => Some("*"),
       allowsMethods = _ => Some(Seq("GET", "POST")),
       allowsHeaders = _ => Some(Seq("Accept"))
     )
 
-
-
-    val service: Service[Request, Response] = (api :+: authenticate :+: verifyJWT).toService
-    val corsService: Service[Request, Response] = new Cors.HttpFilter(policy).andThen(service)
-
-    val server =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
-
-
+    val service     = (api :+: authenticate :+: verifyJWT).toService
+    val corsService = new Cors.HttpFilter(policy).andThen(service)
+    val server      =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
 
     onExit { server.close() }
 

@@ -1,12 +1,9 @@
-import com.twitter.util.Try
-import io.finch.Output.Failure
 import slick.ast.ColumnOption.PrimaryKey
 import slick.driver.PostgresDriver.api._
-import slick.lifted.{ProvenShape, TableQuery, Tag}
+import slick.lifted.{TableQuery, Tag}
 
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Success
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 
 object tables {
   val db: Database = Database.forURL(
@@ -30,21 +27,20 @@ object tables {
 
   val users = TableQuery[AuthTable]
 
-  /************* DAO Classes **************************************************/
+  /************* DAO Objects **************************************************/
   object AuthDAO {
     def getUsers()(implicit e: ExecutionContext): Future[Seq[Auth]] = {
       db.run(users.result)
     }
 
     def verifyUser(username: String, hash: String): Future[Option[Boolean]] = {
-      val query = users.filter(user => user.username === username).filter(user => user.hash === hash).map(
-        (usr: AuthTable) => usr.isAdmin)
+      val query = users.filter(user => user.username === username).
+                        filter(user => user.hash     === hash).
+                        map(usr     => usr.isAdmin)
 
-      db.run(query.result).map{
-        (f:Seq[Boolean]) => f match {
-          case Vector(x) => Some(x)
-          case _  => None
-        }
+      db.run(query.result) map {
+        case Vector(x) => Some(x)
+        case _ => None
       }
     }
   }

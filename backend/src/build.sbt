@@ -2,7 +2,7 @@ name := "backend"
 
 version := "1.0"
 
-scalaVersion := "2.11.0"
+scalaVersion := "2.11.8"
 
 resolvers += "twttr" at "https://maven.twttr.com/"
 
