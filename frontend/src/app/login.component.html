@@ -1,4 +1,4 @@
-<span class="{{isHidden}}">
+<span class="{{isHidden}}" >
   <form class="form-signin" >
     <h2 class="form-signin-heading">Please sign in</h2>
     <label for="inputUsername" class="sr-only">Email address</label>
@@ -8,7 +8,7 @@
     <input [(ngModel)]="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
     <br/>
     <button (click)="onClickSubmit()" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <br/>
+    <div class="alert alert-danger {{wasError}}">{{response}}</div>
   </form>
-  <br/>
-  <div class="alert alert-danger {{wasError}}">{{response}}</div>
 </span>
