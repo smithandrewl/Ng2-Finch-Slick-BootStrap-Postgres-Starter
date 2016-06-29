@@ -19,9 +19,7 @@ export class LoginAppComponent {
    this.http.get("http://localhost:8080/authenticate/" + this.username + "/" + this.password).subscribe(this.auth);
   };
 
-  private auth(resp:Response) {
-    alert("Auth response: " + resp.text());
+  private auth = (resp:Response) => {
     this.response = resp.text();
-  }
-
+  };
 }
