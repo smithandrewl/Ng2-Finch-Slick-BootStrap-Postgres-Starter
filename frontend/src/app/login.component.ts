@@ -12,6 +12,7 @@ export class LoginAppComponent {
   username = '';
   password = '';
   response = '';
+  hidden='';
 
   constructor(public http: Http) {}
 
@@ -21,5 +22,10 @@ export class LoginAppComponent {
 
   private auth = (resp:Response) => {
     this.response = resp.text();
+
+    if(this.response != "no such username or incorrect password") {
+      this.hidden = 'hidden';
+    }
+    
   };
 }
