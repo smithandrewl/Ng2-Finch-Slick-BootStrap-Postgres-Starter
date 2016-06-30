@@ -12,6 +12,7 @@ export class LoginScreenComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    
   }
 
   @ViewChild('frontend-app')
