@@ -1,8 +1,10 @@
 <span class="{{isHidden}}" >
-  <div class="panel panel-default login-panel">
+  <div class="panel panel-primary login-panel">
+    <div class="panel-heading">
+     <div class="panel-title">Please sign in</div>
+      </div>
     <div class="panel-body">
-  <form class="form-signin" >
-    <h2 class="form-signin-heading">Please sign in</h2>
+  <form class="form-signin">
     <label for="inputUsername" class="sr-only">Email address</label>
     <input [(ngModel)]="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
     <br/>
