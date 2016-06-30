@@ -1,4 +1,4 @@
-<span class="{{isHidden}}" >
+<span class="{{isHidden}}">
   <div class="panel panel-primary login-panel">
     <div class="panel-heading">
      <div class="panel-title">Please sign in</div>
@@ -6,10 +6,12 @@
     <div class="panel-body">
   <form class="form-signin">
     <label for="inputUsername" class="sr-only">Email address</label>
-    <input [(ngModel)]="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+    <input [(ngModel)]="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required
+           autofocus>
     <br/>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input [(ngModel)]="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input [(ngModel)]="password" type="password" id="inputPassword" class="form-control" placeholder="Password"
+           required>
     <br/>
     <button (click)="onClickSubmit()" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <br/>
