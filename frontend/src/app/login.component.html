@@ -5,13 +5,20 @@
       </div>
     <div class="panel-body">
   <form class="form-signin">
-    <label for="inputUsername" class="sr-only">Email address</label>
-    <input [(ngModel)]="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required
-           autofocus>
+
+
+    <div class="input-group">
+      <label for="inputUsername" class="sr-only">Email address</label>
+      <span class="input-group-addon" ><div class="material-icons">person</div></span>
+      <input [(ngModel)]="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+    </div>
+
     <br/>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input [(ngModel)]="password" type="password" id="inputPassword" class="form-control" placeholder="Password"
-           required>
+    <div class="input-group">
+      <label for="inputPassword" class="sr-only">Password</label>
+      <span class="input-group-addon"><div class="material-icons">vpn_key</div></span>
+      <input [(ngModel)]="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    </div>
     <br/>
     <button (click)="onClickSubmit()" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <br/>
