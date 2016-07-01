@@ -17,7 +17,7 @@ export class LoginAppComponent {
   constructor(public http: Http) {}
 
   onClickSubmit() {
-   this.http.get("http://localhost:8080/authenticate/" + this.username + "/" + this.password).subscribe(this.auth);
+    this.http.get("http://localhost:8080/authenticate/" + this.username + "/" + this.password).subscribe(this.auth);
   };
 
   private auth = (resp:Response) => {
@@ -29,6 +29,5 @@ export class LoginAppComponent {
     } else {
       this.wasError = '';
     }
-    
   };
 }

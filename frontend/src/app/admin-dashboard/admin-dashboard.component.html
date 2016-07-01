@@ -16,22 +16,23 @@
 </div>
 
 <div class="container">
-<div class="admin-background">
-  <table class="table table-bordered">
-    <tr>
-      <th>UserID</th>
-      <th>Username</th>
-      <th>Hash</th>
-      <th>isAdmin</th>
-    </tr>
-
-    <tr *ngFor="let user of users">
-      <td>{{user.userId}}</td>
-      <td>{{user.username}}</td>
-      <td>{{user.hash}}</td>
-      <td>{{user.isAdmin}}</td>
-    </tr>
-  </table>
-</div>
+  <div class="admin-background">
+    <br/>
+    <h1 class="text-center">Users &nbsp;</h1>
+    <table class="table table-bordered">
+      <tr>
+        <th class="text-center"><i class="material-icons">vpn_key</i> &nbsp; UserID</th>
+        <th class="text-center"><i class="material-icons">person</i> &nbsp; Username</th>
+        <th class="text-center"><i class="material-icons">fingerprint</i> &nbsp;Hash</th>
+        <th class="text-center"><i class="material-icons">visibility</i> &nbsp; IsAdmin</th>
+      </tr>
+      <tr *ngFor="let user of users">
+        <td class="text-center">{{user.userId}}</td>
+        <td class="text-center">{{user.username}}</td>
+        <td class="text-center">{{user.hash}}</td>
+        <td class="text-center">{{user.isAdmin}}</td>
+      </tr>
+    </table>
   </div>
+</div>
 

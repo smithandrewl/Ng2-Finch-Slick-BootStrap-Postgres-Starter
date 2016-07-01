@@ -1,0 +1,939 @@
+(node:2485) fs: re-evaluating native module sources is not supported. If you are using the graceful-fs module, please update it to a more recent version.
+Could not start watchman; falling back to NodeWatcher for file system events.
+Visit http://ember-cli.com/user-guide/#watchman for more info.
+Livereload server on http://localhost:49152
+Serving on http://localhost:4200/
+The Broccoli Plugin: [BroccoliTypeScriptCompiler] failed with:
+Error: Typescript found the following errors:
+  /home/andrew/files/projects/manyTasks/frontend/tmp/broccoli_type_script_compiler-input_base_path-xf8q9kbn.tmp/0/src/app/admin-dashboard/admin-dashboard.component.spec.ts (17, 21): Supplied parameters do not match any signature of call target.
+    at BroccoliTypeScriptCompiler._doIncrementalBuild (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/lib/broccoli/broccoli-typescript.js:120:19)
+    at BroccoliTypeScriptCompiler.build (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/lib/broccoli/broccoli-typescript.js:43:10)
+    at /home/andrew/files/projects/manyTasks/frontend/node_modules/broccoli-caching-writer/index.js:152:21
+    at lib$rsvp$$internal$$tryCatch (/home/andrew/files/projects/manyTasks/frontend/node_modules/rsvp/dist/rsvp.js:1036:16)
+    at lib$rsvp$$internal$$invokeCallback (/home/andrew/files/projects/manyTasks/frontend/node_modules/rsvp/dist/rsvp.js:1048:17)
+    at lib$rsvp$$internal$$publish (/home/andrew/files/projects/manyTasks/frontend/node_modules/rsvp/dist/rsvp.js:1019:11)
+    at lib$rsvp$asap$$flush (/home/andrew/files/projects/manyTasks/frontend/node_modules/rsvp/dist/rsvp.js:1198:9)
+    at _combinedTickCallback (internal/process/next_tick.js:67:7)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+
+The broccoli plugin was instantiated at: 
+    at BroccoliTypeScriptCompiler.Plugin (/home/andrew/files/projects/manyTasks/frontend/node_modules/broccoli-caching-writer/node_modules/broccoli-plugin/index.js:10:31)
+    at BroccoliTypeScriptCompiler.CachingWriter [as constructor] (/home/andrew/files/projects/manyTasks/frontend/node_modules/broccoli-caching-writer/index.js:21:10)
+    at BroccoliTypeScriptCompiler (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/lib/broccoli/broccoli-typescript.js:27:5)
+    at Angular2App._getTsTree (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/lib/broccoli/angular2-app.js:321:18)
+    at Angular2App._buildTree (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/lib/broccoli/angular2-app.js:116:23)
+    at new Angular2App (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/lib/broccoli/angular2-app.js:53:23)
+    at module.exports (/home/andrew/files/projects/manyTasks/frontend/angular-cli-build.js:6:10)
+    at Class.module.exports.Task.extend.setupBroccoliBuilder (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/node_modules/angular-cli/lib/models/builder.js:55:19)
+    at Class.module.exports.Task.extend.init (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/node_modules/angular-cli/lib/models/builder.js:89:10)
+    at new Class (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/node_modules/core-object/core-object.js:18:12)
+    at Class.module.exports.Task.extend.run (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/node_modules/angular-cli/lib/tasks/serve.js:15:19)
+    at /home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/node_modules/angular-cli/lib/commands/serve.js:64:24
+    at lib$rsvp$$internal$$tryCatch (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/node_modules/rsvp/dist/rsvp.js:1036:16)
+    at lib$rsvp$$internal$$invokeCallback (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/node_modules/rsvp/dist/rsvp.js:1048:17)
+    at /home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/node_modules/rsvp/dist/rsvp.js:331:11
+    at lib$rsvp$asap$$flush (/home/andrew/files/projects/manyTasks/frontend/node_modules/angular-cli/node_modules/rsvp/dist/rsvp.js:1198:9)
+
+
+file deleted app/admin-dashboard/admin-dashboard.component.spec.ts
+
+Build successful - 464ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 386ms               
+BroccoliTypeScriptCompiler                    | 23ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 386ms               
+BroccoliTypeScriptCompiler (1)                | 23ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 253ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 214ms               
+BroccoliTypeScriptCompiler                    | 16ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 214ms               
+BroccoliTypeScriptCompiler (1)                | 16ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 279ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 239ms               
+BroccoliTypeScriptCompiler                    | 17ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 239ms               
+BroccoliTypeScriptCompiler (1)                | 17ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 153ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 130ms               
+BroccoliTypeScriptCompiler                    | 8ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 130ms               
+BroccoliTypeScriptCompiler (1)                | 8ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 160ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 137ms               
+BroccoliTypeScriptCompiler                    | 8ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 137ms               
+BroccoliTypeScriptCompiler (1)                | 8ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 132ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 107ms               
+BroccoliTypeScriptCompiler                    | 7ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 107ms               
+Funnel (7)                                    | 9ms (1 ms)          
+BroccoliTypeScriptCompiler (1)                | 7ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 217ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 172ms               
+BroccoliTypeScriptCompiler                    | 13ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 172ms               
+Funnel (7)                                    | 20ms (2 ms)         
+BroccoliTypeScriptCompiler (1)                | 13ms                
+
+file added index.html___jb_tmp___
+file changed index.html___jb_tmp___
+file added index.html___jb_old___
+file deleted index.html___jb_tmp___
+file changed index.html
+file deleted index.html___jb_old___
+
+Build successful - 148ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 112ms               
+HandlebarReplace                              | 14ms                
+BroccoliTypeScriptCompiler                    | 8ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 112ms               
+HandlebarReplace (1)                          | 14ms                
+BroccoliTypeScriptCompiler (1)                | 8ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 141ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 120ms               
+BroccoliTypeScriptCompiler                    | 7ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 120ms               
+BroccoliTypeScriptCompiler (1)                | 7ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+
+Build successful - 179ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 144ms               
+Funnel                                        | 14ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 144ms               
+Funnel (7)                                    | 21ms (3 ms)         
+
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 212ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 192ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 192ms               
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 152ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 125ms               
+BroccoliTypeScriptCompiler                    | 12ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 125ms               
+BroccoliTypeScriptCompiler (1)                | 12ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 166ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 137ms               
+BroccoliTypeScriptCompiler                    | 11ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 137ms               
+BroccoliTypeScriptCompiler (1)                | 11ms                
+Funnel (7)                                    | 8ms (1 ms)          
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 195ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 167ms               
+BroccoliTypeScriptCompiler                    | 11ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 167ms               
+BroccoliTypeScriptCompiler (1)                | 11ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 128ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 105ms               
+BroccoliTypeScriptCompiler                    | 11ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 105ms               
+BroccoliTypeScriptCompiler (1)                | 11ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 167ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 146ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 146ms               
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html
+file added app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 204ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 179ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 179ms               
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 147ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 118ms               
+BroccoliTypeScriptCompiler                    | 10ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 118ms               
+BroccoliTypeScriptCompiler (1)                | 10ms                
+Funnel (7)                                    | 10ms (1 ms)         
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 173ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 137ms               
+BroccoliTypeScriptCompiler                    | 10ms                
+Funnel                                        | 9ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 137ms               
+Funnel (7)                                    | 18ms (2 ms)         
+BroccoliTypeScriptCompiler (1)                | 10ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 223ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 190ms               
+BroccoliTypeScriptCompiler                    | 13ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 190ms               
+BroccoliTypeScriptCompiler (1)                | 13ms                
+
+
+Build successful - 132ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 118ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 118ms               
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 167ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 127ms               
+BroccoliTypeScriptCompiler                    | 13ms                
+Funnel                                        | 9ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 127ms               
+Funnel (7)                                    | 18ms (2 ms)         
+BroccoliTypeScriptCompiler (1)                | 13ms                
+
+
+Build successful - 176ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 160ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 160ms               
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 146ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 125ms               
+BroccoliTypeScriptCompiler                    | 8ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 125ms               
+BroccoliTypeScriptCompiler (1)                | 8ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 163ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 137ms               
+BroccoliTypeScriptCompiler                    | 11ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 137ms               
+BroccoliTypeScriptCompiler (1)                | 11ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 162ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 140ms               
+BroccoliTypeScriptCompiler                    | 8ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 140ms               
+BroccoliTypeScriptCompiler (1)                | 8ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+
+Build successful - 195ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 152ms               
+BroccoliMergeTrees                            | 12ms                
+BroccoliTypeScriptCompiler                    | 12ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 152ms               
+BroccoliMergeTrees (2)                        | 17ms (8 ms)         
+BroccoliTypeScriptCompiler (1)                | 12ms                
+Funnel (7)                                    | 10ms (1 ms)         
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 191ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 172ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 172ms               
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 127ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 101ms               
+BroccoliTypeScriptCompiler                    | 7ms                 
+Funnel                                        | 6ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 101ms               
+Funnel (7)                                    | 12ms (1 ms)         
+BroccoliTypeScriptCompiler (1)                | 7ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 119ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 101ms               
+BroccoliTypeScriptCompiler                    | 7ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 101ms               
+BroccoliTypeScriptCompiler (1)                | 7ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 154ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 135ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 135ms               
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+
+Build successful - 208ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 178ms               
+BroccoliTypeScriptCompiler                    | 12ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 178ms               
+BroccoliTypeScriptCompiler (1)                | 12ms                
+
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 205ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 184ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 184ms               
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 118ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 92ms                
+Funnel                                        | 8ms                 
+BroccoliTypeScriptCompiler                    | 6ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 92ms                
+Funnel (7)                                    | 13ms (1 ms)         
+BroccoliTypeScriptCompiler (1)                | 6ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 213ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 176ms               
+BroccoliTypeScriptCompiler                    | 11ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 176ms               
+Funnel (7)                                    | 16ms (2 ms)         
+BroccoliTypeScriptCompiler (1)                | 11ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 127ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 101ms               
+BroccoliMergeTrees                            | 8ms                 
+BroccoliTypeScriptCompiler                    | 7ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 101ms               
+BroccoliMergeTrees (2)                        | 10ms (5 ms)         
+BroccoliTypeScriptCompiler (1)                | 7ms                 
+Funnel (7)                                    | 7ms (1 ms)          
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 132ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 113ms               
+BroccoliTypeScriptCompiler                    | 7ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 113ms               
+BroccoliTypeScriptCompiler (1)                | 7ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 189ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 155ms               
+BroccoliTypeScriptCompiler                    | 12ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 155ms               
+BroccoliTypeScriptCompiler (1)                | 12ms                
+BroccoliMergeTrees (2)                        | 10ms (5 ms)         
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html
+file added app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 134ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 110ms               
+BroccoliTypeScriptCompiler                    | 8ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 110ms               
+Funnel (7)                                    | 8ms (1 ms)          
+BroccoliTypeScriptCompiler (1)                | 8ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 140ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 111ms               
+Funnel                                        | 9ms                 
+BroccoliTypeScriptCompiler                    | 8ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 111ms               
+Funnel (7)                                    | 14ms (2 ms)         
+BroccoliTypeScriptCompiler (1)                | 8ms                 
+
+
+Build successful - 167ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 154ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 154ms               
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 136ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 104ms               
+Funnel                                        | 10ms                
+BroccoliTypeScriptCompiler                    | 9ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 104ms               
+Funnel (7)                                    | 16ms (2 ms)         
+BroccoliTypeScriptCompiler (1)                | 9ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 126ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 100ms               
+BroccoliTypeScriptCompiler                    | 8ms                 
+Funnel                                        | 6ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 100ms               
+Funnel (7)                                    | 12ms (1 ms)         
+BroccoliTypeScriptCompiler (1)                | 8ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 243ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 196ms               
+BroccoliTypeScriptCompiler                    | 21ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 196ms               
+BroccoliTypeScriptCompiler (1)                | 21ms                
+Funnel (7)                                    | 16ms (2 ms)         
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 134ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 106ms               
+Funnel                                        | 8ms                 
+BroccoliTypeScriptCompiler                    | 7ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 106ms               
+Funnel (7)                                    | 13ms (1 ms)         
+BroccoliTypeScriptCompiler (1)                | 7ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+
+Build successful - 199ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 173ms               
+BroccoliTypeScriptCompiler                    | 10ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 173ms               
+BroccoliTypeScriptCompiler (1)                | 10ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 172ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 148ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 148ms               
+Funnel (7)                                    | 9ms (1 ms)          
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 297ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 254ms               
+BroccoliTypeScriptCompiler                    | 17ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 254ms               
+BroccoliTypeScriptCompiler (1)                | 17ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+
+Build successful - 143ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 119ms               
+BroccoliTypeScriptCompiler                    | 8ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 119ms               
+Funnel (7)                                    | 9ms (1 ms)          
+BroccoliTypeScriptCompiler (1)                | 8ms                 
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 180ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 159ms               
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 159ms               
+Funnel (7)                                    | 10ms (1 ms)         
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file added app/admin-dashboard/admin-dashboard.component.html___jb_old___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_old___
+
+Build successful - 202ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 175ms               
+BroccoliTypeScriptCompiler                    | 13ms                
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 175ms               
+BroccoliTypeScriptCompiler (1)                | 13ms                
+
+file added app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file deleted app/admin-dashboard/admin-dashboard.component.html___jb_tmp___
+file changed app/admin-dashboard/admin-dashboard.component.html
+
+Build successful - 190ms.
+
+Slowest Trees                                 | Total               
+----------------------------------------------+---------------------
+vendor                                        | 167ms               
+BroccoliTypeScriptCompiler                    | 9ms                 
+
+Slowest Trees (cumulative)                    | Total (avg)         
+----------------------------------------------+---------------------
+vendor (1)                                    | 167ms               
+BroccoliTypeScriptCompiler (1)                | 9ms                 
+
