@@ -9,5 +9,5 @@ if (environment.production) {
   enableProdMode();
 }
 
-bootstrap(AdminDashboardComponent, [HTTP_PROVIDERS]);
+bootstrap(LoginScreenComponent, [HTTP_PROVIDERS]);
 

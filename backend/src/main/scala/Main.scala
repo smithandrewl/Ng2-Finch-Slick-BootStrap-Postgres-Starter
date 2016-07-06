@@ -10,6 +10,7 @@ import com.twitter.server.TwitterServer
 import com.twitter.util.{Future => TwitterFuture}
 import io.circe.generic.auto._
 import io.circe.syntax._
+import io.finch.Output.Failure
 import io.finch._
 import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
 import org.jose4j.keys.HmacKey
@@ -55,7 +56,7 @@ object Main extends TwitterServer {
 
             Ok(signature.getCompactSerialization)
           }
-          case None => Ok("no such username or incorrect password")
+          case None => Output.failure(new Exception("no such username or incorrect password"))
         }
         )
       }
