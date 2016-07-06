@@ -1,3 +1,4 @@
+import Authentication.{AuthFailure, AuthSuccess, AuthenticationResult}
 import slick.ast.ColumnOption.PrimaryKey
 import slick.driver.PostgresDriver.api._
 import slick.lifted.{TableQuery, Tag}
@@ -33,14 +34,14 @@ object tables {
       db.run(users.result)
     }
 
-    def verifyUser(username: String, hash: String): Future[Option[Boolean]] = {
+    def login(username: String, hash: String): Future[AuthenticationResult] = {
       val query = users.filter(user => user.username === username).
                         filter(user => user.hash     === hash).
                         map(usr     => usr.isAdmin)
 
       db.run(query.result) map {
-        case Vector(x) => Some(x)
-        case _ => None
+        case Vector(isAdmin) => AuthSuccess(Authentication.grantJWT(isAdmin))
+        case _               => AuthFailure
       }
     }
   }

@@ -23,7 +23,7 @@ export class LoginAppComponent {
   private auth = (resp:Response) => {
     this.response = resp.text();
 
-    if(this.response != "no such username or incorrect password") {
+    if(this.response != "No such user or incorrect password") {
       this.wasError = 'hidden';
       this.isHidden='hidden';
     } else {
