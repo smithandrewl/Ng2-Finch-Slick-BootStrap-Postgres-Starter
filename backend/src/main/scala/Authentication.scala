@@ -1,6 +1,11 @@
 import java.math.BigInteger
+import java.net.InetSocketAddress
 import java.security.SecureRandom
 
+import com.twitter.finagle.http.{Request, Response}
+import com.twitter.finagle.{Filter, Service}
+import com.twitter.util.Future
+import org.jboss.netty.handler.codec.http.HttpRequest
 import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
 import org.jose4j.keys.HmacKey
 

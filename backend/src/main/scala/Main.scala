@@ -43,7 +43,7 @@ object Main extends TwitterServer {
     )
 
     val service     = (api :+: authenticate :+: verifyJWT).toService
-    val corsService = new Cors.HttpFilter(policy).andThen(service)
+    val corsService = new Cors.HttpFilter(policy).andThen(new AuthenticationFilter().andThen(service))
     val server      =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
 
     onExit { server.close() }
