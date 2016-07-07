@@ -39,7 +39,7 @@ object Main extends TwitterServer {
     val policy: Cors.Policy = Cors.Policy(
       allowsOrigin  = _ => Some("*"),
       allowsMethods = _ => Some(Seq("GET", "POST")),
-      allowsHeaders = _ => Some(Seq("Accept"))
+      allowsHeaders = _ => Some(Seq("Accept", "Authorization"))
     )
 
     val service     = (api :+: authenticate :+: verifyJWT).toService

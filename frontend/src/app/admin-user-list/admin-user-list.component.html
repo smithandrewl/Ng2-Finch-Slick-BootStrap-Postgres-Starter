@@ -1,0 +1,22 @@
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">Users</div>
+  <div class="panel-body">
+
+    <table class="table">
+      <tr>
+        <th>Username</th>
+        <th>Hash</th>
+        <th>IsAdmin</th>
+      </tr>
+
+      <tr *ngFor="let user of userData">
+        <td>{{user.username}}</td>
+        <td>{{user.hash}}</td>
+        <td>{{user.isAdmin}}</td>
+      </tr>
+    </table>
+
+  </div>
+</div>
