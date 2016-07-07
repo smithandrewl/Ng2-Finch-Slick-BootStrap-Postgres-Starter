@@ -27,6 +27,7 @@ export class LoginAppComponent {
     if(this.response != "No such user or incorrect password") {
       this.wasError = 'hidden';
       this.isHidden='hidden';
+      window.localStorage.setItem('jwt',this.response);
       this.routingService.changeRoute('/admin');
     } else {
       this.wasError = '';

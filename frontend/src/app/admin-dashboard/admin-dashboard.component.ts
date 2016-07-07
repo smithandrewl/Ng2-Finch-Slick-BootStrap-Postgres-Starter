@@ -17,6 +17,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   clicked() {
+    window.localStorage.removeItem('jwt');
     this.routingService.changeRoute('');
   }
 
