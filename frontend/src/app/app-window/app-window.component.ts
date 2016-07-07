@@ -16,6 +16,7 @@ export class AppWindowComponent implements OnInit {
     routingService.routeChanged$.subscribe(
         route => {
             this._router.navigate([route]);
+            console.log("Route change detected by AppWindowComponent: " + route);
         }
     );
   }

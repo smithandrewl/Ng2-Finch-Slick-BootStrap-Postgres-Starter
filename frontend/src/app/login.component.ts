@@ -7,7 +7,7 @@ import {RoutingService} from './routing.service';
   moduleId: module.id,
   selector: 'frontend-app',
   templateUrl: 'login.component.html',
-  styleUrls: ['login.component.css']
+  styleUrls: ['login.component.css'],
 })
 export class LoginAppComponent {
   username = '';
@@ -27,7 +27,7 @@ export class LoginAppComponent {
     if(this.response != "No such user or incorrect password") {
       this.wasError = 'hidden';
       this.isHidden='hidden';
-      this.routingService.changeRoute('');
+      this.routingService.changeRoute('/admin');
     } else {
       this.wasError = '';
     }

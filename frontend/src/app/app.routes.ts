@@ -1,6 +1,7 @@
 import { LoginScreenComponent} from './login-screen';
-import { LoginAppComponent} from './';
+import { AdminDashboardComponent} from './admin-dashboard';
 
 export const AppRoutes = [
-    { path: '', component: LoginScreenComponent }
+    { path: '', component: LoginScreenComponent },
+    { path: 'admin', component: AdminDashboardComponent }
 ];
