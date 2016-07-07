@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
+import {RoutingService} from './routing.service';
 
 @Component({
   moduleId: module.id,
@@ -14,7 +15,7 @@ export class LoginAppComponent {
   response = '';
   wasError = 'hidden';
   isHidden = '';
-  constructor(public http: Http) {}
+  constructor(private routingService: RoutingService, public http: Http) {}
 
   onClickSubmit() {
     this.http.get("http://localhost:8080/authenticate/" + this.username + "/" + this.password).subscribe(this.auth);
@@ -26,7 +27,7 @@ export class LoginAppComponent {
     if(this.response != "No such user or incorrect password") {
       this.wasError = 'hidden';
       this.isHidden='hidden';
-      this.
+      this.routingService.changeRoute('');
     } else {
       this.wasError = '';
     }

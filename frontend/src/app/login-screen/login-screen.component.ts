@@ -1,5 +1,6 @@
 import { ViewChild, Component, OnInit } from '@angular/core';
 import {LoginAppComponent} from '../login.component';
+import {RoutingService} from '../routing.service';
 
 @Component({
   moduleId: module.id,
@@ -10,7 +11,7 @@ import {LoginAppComponent} from '../login.component';
 })
 export class LoginScreenComponent implements OnInit {
 
-  constructor() {}
+  constructor(private routingService: RoutingService) {}
 
   ngOnInit() {
     
