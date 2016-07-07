@@ -1,5 +1,5 @@
-import { LoginAppComponent} from './';
+import { LoginScreenComponent} from './login-screen';
 
 export const AppRoutes = [
-    { path: '', component: LoginAppComponent },
+    { path: '', component: LoginScreenComponent },
 ];

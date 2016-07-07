@@ -1,5 +1,6 @@
 import { ViewChild, Component, OnInit } from '@angular/core';
 import {LoginAppComponent} from '../login.component';
+
 @Component({
   moduleId: module.id,
   selector: 'app-login-screen',
