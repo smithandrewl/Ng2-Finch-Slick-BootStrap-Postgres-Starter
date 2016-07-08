@@ -1,90 +1,92 @@
---
--- PostgreSQL database dump
---
+DROP TABLE AppEvent;
+DROP TABLE AppActionResult;
+DROP TABLE AppAction;
+DROP TABLE AppSection;
+DROP TABLE AppEventType;
+DROP TABLE AppEventSeverity;
+DROP TABLE auth;
 
--- Dumped from database version 9.5.3
--- Dumped by pg_dump version 9.5.3
-
--- Started on 2016-06-20 19:24:17 UTC
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'SQL_ASCII';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- TOC entry 1 (class 3079 OID 12362)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- TOC entry 2109 (class 0 OID 0)
--- Dependencies: 1
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
-SET search_path = public, pg_catalog;
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
---
--- TOC entry 181 (class 1259 OID 16389)
--- Name: auth; Type: TABLE; Schema: public; Owner: many_tasks_user
---
-
-CREATE TABLE auth (
-    username character varying(100) NOT NULL,
-    hash bytea NOT NULL
+CREATE TABLE auth
+(
+  authid   SERIAL,
+  username VARCHAR(200) NOT NULL UNIQUE,
+  hash     VARCHAR(64)  NOT NULL,
+  isadmin  BOOLEAN      NOT NULL,
+  CONSTRAINT auth_pkey PRIMARY KEY (authid)
 );
 
+CREATE TABLE AppEventSeverity
+(
+  appEventSeverityId SERIAL,
+  label              VARCHAR(100) NOT NULL UNIQUE,
+  CONSTRAINT app_event_severity_pkey PRIMARY KEY (appEventSeverityId)
+);
 
-ALTER TABLE auth OWNER TO many_tasks_user;
+CREATE TABLE AppEventType
+(
+  appEventTypeId SERIAL,
+  label          VARCHAR(100) NOT NULL UNIQUE,
+  CONSTRAINT app_event_type_pkey PRIMARY KEY (appEventTypeId)
+);
 
---
--- TOC entry 2101 (class 0 OID 16389)
--- Dependencies: 181
--- Data for Name: auth; Type: TABLE DATA; Schema: public; Owner: many_tasks_user
---
+CREATE TABLE AppSection
+(
+  appSectionId SERIAL,
+  label        VARCHAR(100) NOT NULL UNIQUE,
+  CONSTRAINT app_section_pkey PRIMARY KEY (appSectionId)
+);
 
-COPY auth (username, hash) FROM stdin;
-\.
+CREATE TABLE AppAction
+(
+  appActionId SERIAL,
+  label       VARCHAR(100) NOT NULL UNIQUE,
+  CONSTRAINT app_action_pkey PRIMARY KEY (appActionId)
+);
 
+CREATE TABLE AppActionResult
+(
+  appActionResultId SERIAL,
+  label             VARCHAR(100) NOT NULL UNIQUE,
+  CONSTRAINT app_action_result_pkey PRIMARY KEY (appActionResultId)
+);
 
---
--- TOC entry 1986 (class 2606 OID 16396)
--- Name: auth_pkey; Type: CONSTRAINT; Schema: public; Owner: many_tasks_user
---
+CREATE TABLE AppEvent
+(
+  appEventId   SERIAL,
+  timestamp    TIMESTAMP,
+  userId       INT,
+  category     INT,
+  section      INT,
+  action       INT,
+  actionResult INT,
+  severity     INT,
+  CONSTRAINT app_event_pkey PRIMARY KEY (appEventId),
+  CONSTRAINT app_event_fkey_auth_authid        FOREIGN KEY (userId)       REFERENCES Auth (authid),
+  CONSTRAINT app_event_fkey_app_event_type     FOREIGN KEY (category)     REFERENCES AppEventType (appEventTypeId),
+  CONSTRAINT app_event_fkey_app_section        FOREIGN KEY (section)      REFERENCES AppSection (appSectionId),
+  CONSTRAINT app_event_fkey_app_action         FOREIGN KEY (action)       REFERENCES AppAction (appActionId),
+  CONSTRAINT app_event_fkey_app_action_result  FOREIGN KEY (actionResult) REFERENCES AppActionResult (appActionResultId),
+  CONSTRAINT app_event_fkey_app_event_severity FOREIGN KEY (severity)     REFERENCES AppEventSeverity (appEventSeverityId)
+);
 
-ALTER TABLE ONLY auth
-    ADD CONSTRAINT auth_pkey PRIMARY KEY (username);
+INSERT INTO Auth (username, hash, isadmin) VALUES ('admin', 'e2875c848ce7f34f266dc26da15fea61ba5dd2ca362a646f860cac8595471f12', TRUE);
 
+INSERT INTO AppEventSeverity (label) VALUES ('MINOR');
+INSERT INTO AppEventSeverity (label) VALUES ('NORMAL');
+INSERT INTO AppEventSeverity (label) VALUES ('MAJOR');
 
---
--- TOC entry 2108 (class 0 OID 0)
--- Dependencies: 6
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
+INSERT INTO AppEventType (label) VALUES ('AUTH');
+INSERT INTO AppEventType (label) VALUES ('APP');
 
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
+INSERT INTO AppSection (label) VALUES ('LOGIN');
+INSERT INTO AppSection (label) VALUES ('ADMIN');
 
+INSERT INTO AppAction (label) VALUES ('LIST_USERS');
+INSERT INTO AppAction (label) VALUES ('USER_LOGIN');
+INSERT INTO AppAction (label) VALUES ('USER_LOGOUT');
 
--- Completed on 2016-06-20 19:24:17 UTC
+INSERT INTO AppActionResult (label) VALUES ('ACTION_SUCCESS');
+INSERT INTO AppActionResult (label) VALUES ('ACTION_FAILURE');
+INSERT INTO AppActionResult (label) VALUES ('ACTION_NORMAL');
 
---
--- PostgreSQL database dump complete
---
-
+INSERT INTO AppEvent(userId, category, section, action, actionResult, severity) VALUES (1, 1, 1, 1, 1, 1);
