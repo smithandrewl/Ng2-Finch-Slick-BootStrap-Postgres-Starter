@@ -17,7 +17,7 @@
       </tr>
 
       <tr *ngFor="let event of eventData">
-        <td>{{event.Timestamp}}</td>
+        <td>{{event.Timestamp | date: 'yyyy/MM/dd hh:mm:ss a'}}</td>
         <td>{{event.IPAddress}}</td>
         <td>{{event.User}}</td>
         <td>{{event.Type}}</td>
