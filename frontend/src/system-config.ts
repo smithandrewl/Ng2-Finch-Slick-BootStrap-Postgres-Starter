@@ -34,6 +34,7 @@ const barrels: string[] = [
   'app/app-window-component',
   'app/app-window',
   'app/admin-user-list',
+  'app/event-list',
   /** @cli-barrel */
 ];
 

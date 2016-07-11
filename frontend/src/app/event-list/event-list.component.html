@@ -1,0 +1,31 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading">Events</div>
+  <div class="panel-body">
+
+    <table class="table">
+      <tr>
+
+        <th>Timestamp</th>
+        <th>IP Address</th>
+        <th>User Id</th>
+        <th>Event Type</th>
+        <th>Section</th>
+        <th>Action</th>
+        <th>ActionResult</th>
+        <th>Event Severity</th>
+      </tr>
+
+      <tr *ngFor="let event of eventData">
+        <td>{{event.Timestamp}}</td>
+        <td>{{event.IPAddress}}</td>
+        <td>{{event.User}}</td>
+        <td>{{event.Type}}</td>
+        <td>{{event.Section}}</td>
+        <td>{{event.Action}}</td>
+        <td>{{event.Result}}</td>
+        <td>{{event.Severity}}</td>
+      </tr>
+      </table>
+  </div>
+</div>

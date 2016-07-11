@@ -66,6 +66,9 @@ object Main extends TwitterServer {
     implicit val appActionResultDecoder = enumDecoder(AppActionResult)
     implicit val appActionResultEncoder = enumEncoder(AppActionResult)
 
+    implicit val AppActionDecoder = enumDecoder(AppAction)
+    implicit val AppActionEncoder = enumEncoder(AppAction)
+
     implicit val appEventEncoder = new Encoder[AppEvent] {
       override def apply(event: AppEvent): Json = Encoder.encodeJsonObject{
         JsonObject.fromMap{
@@ -76,7 +79,8 @@ object Main extends TwitterServer {
             "Type"      -> appEventTypeEncoder(event.appEventType),
             "Section"   -> appSectionEncoder(event.appSection),
             "Result"    -> appActionResultEncoder(event.appActionResult),
-            "Severity"  -> appEventSeverityEncoder(event.appEventSeverity)
+            "Severity"  -> appEventSeverityEncoder(event.appEventSeverity),
+            "Action"    -> appActionEncoder(event.appAction)
           )
         }
       }
@@ -95,7 +99,7 @@ object Main extends TwitterServer {
     )
 
     val service     = (api :+: authenticate :+: verifyJWT :+: listEvents).toService
-    val corsService = new Cors.HttpFilter(policy).andThen(new AuthenticationFilter().andThen(service))
+    val corsService = new Cors.HttpFilter(policy).andThen(service) //.andThen(new AuthenticationFilter().andThen(service))
     val server      =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
 
     onExit { server.close() }
