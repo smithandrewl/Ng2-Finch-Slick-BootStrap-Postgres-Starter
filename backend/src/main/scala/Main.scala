@@ -13,13 +13,18 @@ import io.finch._
 import tables._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 import scala.util.Try
 
 object Main extends TwitterServer {
   def main() {
 
     val api: Endpoint[String] = get("users") {
+      val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.App, AppSection.Admin, AppAction.ListUsers, AppActionResult.ActionNormal, AppEventSeverity.Normal)
+
+      Await.result(a, Duration.Inf)
+
       val users: TwitterFuture[Seq[Auth]] =  Bijection[Future[Seq[Auth]],TwitterFuture[Seq[Auth]]](tables.AuthDAO.getUsers())
 
       Ok(users.map(usrs => usrs.asJson.toString()))
@@ -32,8 +37,20 @@ object Main extends TwitterServer {
     val authenticate: Endpoint[String] = get("authenticate" :: string :: string) {
       (username: String, hash: String) => {
         Bijection[Future[AuthenticationResult], TwitterFuture[AuthenticationResult]](tables.AuthDAO.login(username, hash)).map {
-          case AuthSuccess(jwt) => Ok(jwt)
-          case AuthFailure      => Ok("No such user or incorrect password")
+          case AuthSuccess(jwt) => {
+            val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionSuccess, AppEventSeverity.Normal)
+
+            Await.result(a, Duration.Inf)
+
+            Ok(jwt)
+          }
+          case AuthFailure      => {
+            val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionFailure, AppEventSeverity.Minor)
+
+            Await.result(a, Duration.Inf)
+
+            Ok("No such user or incorrect password")
+          }
         }
       }
     }

@@ -137,10 +137,6 @@ object tables {
 
   object AuthDAO {
     def getUsers()(implicit e: ExecutionContext): Future[Seq[Auth]] = {
-      val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.App, AppSection.Admin, AppAction.ListUsers, AppActionResult.ActionNormal, AppEventSeverity.Normal)
-
-      Await.result(a, Duration.Inf)
-
       db.run(users.result)
     }
 
@@ -151,17 +147,9 @@ object tables {
 
       db.run(query.result) map {
         case Vector(isAdmin) => {
-          val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionSuccess, AppEventSeverity.Normal)
-
-          Await.result(a, Duration.Inf)
-
           Authentication.AuthSuccess(Authentication.grantJWT(isAdmin))
         }
         case _               => {
-          val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionFailure, AppEventSeverity.Minor)
-
-          Await.result(a, Duration.Inf)
-
           AuthFailure
         }
       }
