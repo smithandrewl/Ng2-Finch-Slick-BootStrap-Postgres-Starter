@@ -6,7 +6,7 @@ scalaVersion := "2.11.8"
 
 resolvers += "twttr" at "https://maven.twttr.com/"
 
-val circeVersion = "0.4.1"
+val circeVersion = "0.5.0-M2"
 
 libraryDependencies ++= Seq(
   "io.circe" %% "circe-core",

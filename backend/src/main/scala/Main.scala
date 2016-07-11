@@ -6,13 +6,15 @@ import com.twitter.finagle.http.filter.Cors
 import com.twitter.finagle.param.Stats
 import com.twitter.server.TwitterServer
 import com.twitter.util.{Future => TwitterFuture}
+import io.circe._
 import io.circe.generic.auto._
 import io.circe.syntax._
 import io.finch._
-import tables.Auth
+import tables._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.Try
 
 object Main extends TwitterServer {
   def main() {
@@ -36,13 +38,63 @@ object Main extends TwitterServer {
       }
     }
 
+    ////////// https://github.com/travisbrown/circe/pull/325/files /////////////////////////////////
+    def enumDecoder[E <: Enumeration](enum: E): Decoder[E#Value] =
+        Decoder.decodeString.flatMap { str =>
+            Decoder.instanceTry { _ =>
+                Try(enum.withName(str))
+              }
+        }
+
+    def enumEncoder[E <: Enumeration](enum: E): Encoder[E#Value] = new Encoder[E#Value] {
+        override def apply(e: E#Value): Json = Encoder.encodeString(e.toString)
+      }
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+
+    implicit val appActionDecoder = enumDecoder(AppAction)
+    implicit val appActionEncoder = enumEncoder(AppAction)
+
+    implicit val appEventTypeDecoder = enumDecoder(AppEventType)
+    implicit val appEventTypeEncoder = enumEncoder(AppEventType)
+
+    implicit val appSectionDecoder = enumDecoder(AppSection)
+    implicit val appSectionEncoder = enumEncoder(AppSection)
+
+    implicit val appEventSeverityDecoder = enumDecoder(AppEventSeverity)
+    implicit val appEventSeverityEncoder = enumEncoder(AppEventSeverity)
+
+    implicit val appActionResultDecoder = enumDecoder(AppActionResult)
+    implicit val appActionResultEncoder = enumEncoder(AppActionResult)
+
+    implicit val appEventEncoder = new Encoder[AppEvent] {
+      override def apply(event: AppEvent): Json = Encoder.encodeJsonObject{
+        JsonObject.fromMap{
+          Map(
+            "Timestamp" -> Encoder.encodeString(event.timestamp.toString),
+            "IPAddress" -> Encoder.encodeString(event.ipAddress),
+            "User"      -> Encoder.encodeInt(event.userId),
+            "Type"      -> appEventTypeEncoder(event.appEventType),
+            "Section"   -> appSectionEncoder(event.appSection),
+            "Result"    -> appActionResultEncoder(event.appActionResult),
+            "Severity"  -> appEventSeverityEncoder(event.appEventSeverity)
+          )
+        }
+      }
+    }
+
+    val listEvents: Endpoint[String] = get("events") {
+      val events: TwitterFuture[Seq[AppEvent]] = Bijection[Future[Seq[AppEvent]], TwitterFuture[Seq[AppEvent]]](tables.AppEventDAO.getAppEvents())
+
+      Ok(events.map(events => events.asJson.toString()))
+    }
+
     val policy: Cors.Policy = Cors.Policy(
       allowsOrigin  = _ => Some("*"),
       allowsMethods = _ => Some(Seq("GET", "POST")),
       allowsHeaders = _ => Some(Seq("Accept", "Authorization"))
     )
 
-    val service     = (api :+: authenticate :+: verifyJWT).toService
+    val service     = (api :+: authenticate :+: verifyJWT :+: listEvents).toService
     val corsService = new Cors.HttpFilter(policy).andThen(new AuthenticationFilter().andThen(service))
     val server      =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
 

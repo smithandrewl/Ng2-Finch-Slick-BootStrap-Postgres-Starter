@@ -22,7 +22,7 @@ CREATE TABLE AppEventSeverity
   CONSTRAINT app_event_severity_pkey PRIMARY KEY (appEventSeverityId)
 );
 
-CREATE TABLE AppEvencd files ftType
+CREATE TABLE AppEventType
 (
   appEventTypeId SERIAL,
   label          VARCHAR(100) NOT NULL UNIQUE,
@@ -56,18 +56,18 @@ CREATE TABLE AppEvent
   ipAddress    inet      NOT NULL,
   timestamp    TIMESTAMP NOT NULL,
   userId       INT       NOT NULL,
-  category     INT       NOT NULL,
-  section      INT       NOT NULL,
-  action       INT       NOT NULL,
-  actionResult INT       NOT NULL,
-  severity     INT       NOT NULL,
+  appeventtype     INT       NOT NULL,
+  appsection      INT       NOT NULL,
+  appaction       INT       NOT NULL,
+  appactionResult      INT       NOT NULL,
+  appeventseverity     INT       NOT NULL,
   CONSTRAINT app_event_pkey PRIMARY KEY (appEventId),
   CONSTRAINT app_event_fkey_auth_authid        FOREIGN KEY (userId)       REFERENCES Auth             (authid),
-  CONSTRAINT app_event_fkey_app_event_type     FOREIGN KEY (category)     REFERENCES AppEventType     (appEventTypeId),
-  CONSTRAINT app_event_fkey_app_section        FOREIGN KEY (section)      REFERENCES AppSection       (appSectionId),
-  CONSTRAINT app_event_fkey_app_action         FOREIGN KEY (action)       REFERENCES AppAction        (appActionId),
-  CONSTRAINT app_event_fkey_app_action_result  FOREIGN KEY (actionResult) REFERENCES AppActionResult  (appActionResultId),
-  CONSTRAINT app_event_fkey_app_event_severity FOREIGN KEY (severity)     REFERENCES AppEventSeverity (appEventSeverityId)
+  CONSTRAINT app_event_fkey_app_event_type     FOREIGN KEY (appeventtype)     REFERENCES AppEventType     (appEventTypeId),
+  CONSTRAINT app_event_fkey_app_section        FOREIGN KEY (appsection)      REFERENCES AppSection       (appSectionId),
+  CONSTRAINT app_event_fkey_app_action         FOREIGN KEY (appaction)       REFERENCES AppAction        (appActionId),
+  CONSTRAINT app_event_fkey_app_action_result  FOREIGN KEY (appactionResult) REFERENCES AppActionResult  (appActionResultId),
+  CONSTRAINT app_event_fkey_app_event_severity FOREIGN KEY (appeventseverity)     REFERENCES AppEventSeverity (appEventSeverityId)
 );
 
 INSERT INTO Auth (username, hash, isadmin) VALUES ('admin', 'e2875c848ce7f34f266dc26da15fea61ba5dd2ca362a646f860cac8595471f12', TRUE);
@@ -90,4 +90,4 @@ INSERT INTO AppActionResult (label) VALUES ('ACTION_SUCCESS');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_FAILURE');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_NORMAL');
 
-INSERT INTO AppEvent(timestamp, ipAddress, userId, category, section, action, actionResult, severity) VALUES (now(), '127.0.0.1', 1, 1, 1, 1, 1, 1);
+INSERT INTO AppEvent(timestamp, ipAddress, userId, appeventtype, appsection, appaction, appactionResult, appeventseverity) VALUES (now(), '127.0.0.1', 1, 1, 1, 1, 1, 1);

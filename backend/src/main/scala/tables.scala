@@ -91,7 +91,7 @@ object tables {
   /**************** Model Classes ***********************************************/
   case class Auth(userId: Int, username: String, hash: String, isAdmin: Boolean)
 
-  case class Event(
+  case class AppEvent(
                     timestamp:        Timestamp,
                     ipAddress:        String,
                     userId:           Int,
@@ -114,18 +114,21 @@ object tables {
 
   val users = TableQuery[AuthTable]
 
-  class EventTable(tag: Tag) extends Table[Event](tag, "AppEvent") {
+  class EventTable(tag: Tag) extends Table[AppEvent](tag, "appevent") {
     def timestamp        = column[Timestamp]       ("timestamp")
-    def ipAddress        = column[String]          ("ipAddress")
-    def userId           = column[Int]             ("userId")
-    def appEventType     = column[AppEventType]    ("AppEventType")
-    def appSection       = column[AppSection]      ("AppSection")
-    def appAction        = column[AppAction]       ("AppAction")
-    def appActionResult  = column[AppActionResult] ("AppActionResult")
-    def appEventSeverity = column[AppEventSeverity]("AppEventSeverity")
 
-    def * = (timestamp, ipAddress, userId, appEventType, appSection, appAction, appActionResult, appEventSeverity) <> ((Event.apply _).tupled, Event.unapply)
+    def ipAddress        = column[String]          ("ipaddress")
+    def userId           = column[Int]             ("userid")
+    def appEventType     = column[AppEventType]    ("appeventtype")
+    def appSection       = column[AppSection]      ("appsection")
+    def appAction        = column[AppAction]       ("appaction")
+    def appActionResult  = column[AppActionResult] ("appactionresult")
+    def appEventSeverity = column[AppEventSeverity]("appeventseverity")
+
+    def * = (timestamp, ipAddress, userId, appEventType, appSection, appAction, appActionResult, appEventSeverity) <> ((AppEvent.apply _).tupled, AppEvent.unapply)
   }
+
+  val events = TableQuery[EventTable]
 
   /************* DAO Objects **************************************************/
   object AuthDAO {
@@ -142,6 +145,12 @@ object tables {
         case Vector(isAdmin) => AuthSuccess(Authentication.grantJWT(isAdmin))
         case _               => AuthFailure
       }
+    }
+  }
+
+  object AppEventDAO {
+    def getAppEvents()(implicit e:ExecutionContext): Future[Seq[AppEvent]] = {
+      db.run(events.result)
     }
   }
 }
