@@ -1,12 +1,15 @@
 import java.sql.Timestamp
+import java.time.LocalDateTime
 
 import Authentication.{AuthFailure, AuthSuccess, AuthenticationResult}
 import slick.ast.ColumnOption.PrimaryKey
+import slick.driver.PostgresDriver
 import slick.driver.PostgresDriver.api._
 import slick.lifted.{TableQuery, Tag}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 object tables {
   val db: Database = Database.forURL(
@@ -131,8 +134,13 @@ object tables {
   val events = TableQuery[EventTable]
 
   /************* DAO Objects **************************************************/
+
   object AuthDAO {
     def getUsers()(implicit e: ExecutionContext): Future[Seq[Auth]] = {
+      val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.App, AppSection.Admin, AppAction.ListUsers, AppActionResult.ActionNormal, AppEventSeverity.Normal)
+
+      Await.result(a, Duration.Inf)
+
       db.run(users.result)
     }
 
@@ -142,8 +150,20 @@ object tables {
                         map(usr     => usr.isAdmin)
 
       db.run(query.result) map {
-        case Vector(isAdmin) => AuthSuccess(Authentication.grantJWT(isAdmin))
-        case _               => AuthFailure
+        case Vector(isAdmin) => {
+          val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionSuccess, AppEventSeverity.Normal)
+
+          Await.result(a, Duration.Inf)
+
+          Authentication.AuthSuccess(Authentication.grantJWT(isAdmin))
+        }
+        case _               => {
+          val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionFailure, AppEventSeverity.Minor)
+
+          Await.result(a, Duration.Inf)
+
+          AuthFailure
+        }
       }
     }
   }
@@ -152,5 +172,16 @@ object tables {
     def getAppEvents()(implicit e:ExecutionContext): Future[Seq[AppEvent]] = {
       db.run(events.result)
     }
+
+    def logEvent(ipAddress: String, userId: Int, appEventType: AppEventType, appSection: AppSection, appAction: AppAction, appActionResult: AppActionResult, appEventSeverity: AppEventSeverity): Future[PostgresDriver.InsertActionExtensionMethods[tables.EventTable#TableElementType]#SingleInsertResult] = {
+      insertAppEvent(AppEvent(Timestamp.valueOf(LocalDateTime.now), ipAddress, userId, appEventType, appSection, appAction, appActionResult, appEventSeverity))
+    }
+    def insertAppEvent(event: AppEvent)(implicit e:ExecutionContext): Future[PostgresDriver.InsertActionExtensionMethods[tables.EventTable#TableElementType]#SingleInsertResult] = {
+      val action = (events += event)
+
+      val str = action.statements.mkString("\n")
+      db.run(action)
+    }
   }
+
 }

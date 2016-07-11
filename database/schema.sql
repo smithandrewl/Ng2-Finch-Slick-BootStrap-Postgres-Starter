@@ -53,7 +53,7 @@ CREATE TABLE AppActionResult
 CREATE TABLE AppEvent
 (
   appEventId   SERIAL,
-  ipAddress    inet      NOT NULL,
+  ipAddress    VARCHAR(39)      NOT NULL,
   timestamp    TIMESTAMP NOT NULL,
   userId       INT       NOT NULL,
   appeventtype     INT       NOT NULL,
@@ -71,6 +71,7 @@ CREATE TABLE AppEvent
 );
 
 INSERT INTO Auth (username, hash, isadmin) VALUES ('admin', 'e2875c848ce7f34f266dc26da15fea61ba5dd2ca362a646f860cac8595471f12', TRUE);
+INSERT INTO Auth (username, hash, isadmin) VALUES ('andrew', 'fdsa', TRUE);
 
 INSERT INTO AppEventSeverity (label) VALUES ('MINOR');
 INSERT INTO AppEventSeverity (label) VALUES ('NORMAL');
