@@ -1,13 +1,16 @@
-.sev-normal {
-    background-color: #FFF;
-}
+
 
 .sev-minor {
-    background-color: #f67400;
+    background-color: #ff4900;
     color: #FFF;
 }
 
 .sev-major{
     background-color: #ff0e00;
     color: #fffd00;
+}
+
+.action-result-success {
+    background-color: #09be00;
+    color: #fff;
 }

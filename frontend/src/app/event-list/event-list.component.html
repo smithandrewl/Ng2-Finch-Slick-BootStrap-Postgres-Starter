@@ -16,7 +16,7 @@
         <th>Event Severity</th>
       </tr>
 
-      <tr *ngFor="let event of eventData" [class.sev-minor]="event.Severity == 'Minor'" [class.sev-major]="event.Severity == 'Major'">
+      <tr *ngFor="let event of eventData" [class.sev-minor]="event.Severity == 'Minor'" [class.sev-major]="event.Severity == 'Major'" [class.action-result-success]="event.Result == 'ActionSuccess'">
         <td>{{event.Timestamp | date: 'yyyy/MM/dd hh:mm:ss a'}}</td>
         <td>{{event.IPAddress}}</td>
         <td>{{event.User}}</td>
