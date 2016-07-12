@@ -1,23 +1,11 @@
 import java.math.BigInteger
-import java.net.InetSocketAddress
 import java.security.SecureRandom
 
 import Model.JwtPayload
-import com.fasterxml.jackson.core.io.JsonStringEncoder
-import com.twitter.finagle.http.{Request, Response}
-import com.twitter.finagle.{Filter, Service}
-import com.twitter.util.Future
-import io.circe.{Encoder, Json, JsonObject}
-import org.jboss.netty.handler.codec.http.HttpRequest
-import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
-import org.jose4j.keys.HmacKey
-import io.circe.Decoder
-import io.circe.jawn._
-import io.circe._
 import io.circe.generic.auto._
 import io.circe.syntax._
-import io.finch._
-import tables.AppEvent
+import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
+import org.jose4j.keys.HmacKey
 
 
 object Authentication {

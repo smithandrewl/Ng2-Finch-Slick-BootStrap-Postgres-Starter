@@ -1,11 +1,7 @@
 import Model.{AppEvent, JwtPayload, _}
-import io.circe.{Decoder, Encoder, Json, JsonObject}
-import io.circe._
-import scala.util.Try
-import io.circe.Decoder
-import io.circe.jawn._
 
-import io.circe.generic.auto._
+import io.circe.{Encoder, Json, JsonObject}
+import io.circe.Decoder
 import io.circe.syntax._
 
 import scala.util.Try
