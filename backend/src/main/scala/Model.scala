@@ -48,15 +48,13 @@ object Model {
     val ActionNormal  = Value(3)
   }
 
-  case class AppEvent(
-                       timestamp:        Timestamp,
-                       ipAddress:        String,
-                       userId:           Int,
-                       appEventType:     AppEventType,
-                       appSection:       AppSection,
-                       appAction:        AppAction,
-                       appActionResult:  AppActionResult,
-                       appEventSeverity: AppEventSeverity
-                     )
+  case class AppEvent(timestamp:        Timestamp,
+                      ipAddress:        String,
+                      userId:           Int,
+                      appEventType:     AppEventType,
+                      appSection:       AppSection,
+                      appAction:        AppAction,
+                      appActionResult:  AppActionResult,
+                      appEventSeverity: AppEventSeverity)
 
 }

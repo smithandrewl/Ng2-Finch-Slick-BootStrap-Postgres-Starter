@@ -1,10 +1,8 @@
-import com.twitter.finagle.{Filter, Service}
 import com.twitter.finagle.http.{Fields, Request, Response}
+import com.twitter.finagle.{Filter, Service}
 import com.twitter.util.Future
-import io.finch._
 
-class AuthenticationFilter()
-    extends Filter[Request, Response, Request, Response] {
+class AuthenticationFilter() extends Filter[Request, Response, Request, Response] {
   def apply(req: Request, service: Service[Request, Response]): Future[Response] = {
 
     val path = req.path

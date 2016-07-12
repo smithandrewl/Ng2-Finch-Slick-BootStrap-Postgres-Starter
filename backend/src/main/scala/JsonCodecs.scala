@@ -21,23 +21,12 @@ object JsonCodecs {
   }
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  implicit val appActionDecoder = enumDecoder(AppAction)
-  implicit val appActionEncoder = enumEncoder(AppAction)
-
-  implicit val appEventTypeDecoder = enumDecoder(AppEventType)
-  implicit val appEventTypeEncoder = enumEncoder(AppEventType)
-
-  implicit val appSectionDecoder = enumDecoder(AppSection)
-  implicit val appSectionEncoder = enumEncoder(AppSection)
-
-  implicit val appEventSeverityDecoder = enumDecoder(AppEventSeverity)
+  implicit val appActionEncoder        = enumEncoder(AppAction)
+  implicit val appEventTypeEncoder     = enumEncoder(AppEventType)
+  implicit val appSectionEncoder       = enumEncoder(AppSection)
   implicit val appEventSeverityEncoder = enumEncoder(AppEventSeverity)
-
-  implicit val appActionResultDecoder = enumDecoder(AppActionResult)
-  implicit val appActionResultEncoder = enumEncoder(AppActionResult)
-
-  implicit val AppActionDecoder = enumDecoder(AppAction)
-  implicit val AppActionEncoder = enumEncoder(AppAction)
+  implicit val appActionResultEncoder  = enumEncoder(AppActionResult)
+  implicit val AppActionEncoder        = enumEncoder(AppAction)
 
   implicit val jwtPayloadtEncoder = new Encoder[JwtPayload] {
     override def apply(jwtPayload: JwtPayload): Json = Encoder.encodeJsonObject {

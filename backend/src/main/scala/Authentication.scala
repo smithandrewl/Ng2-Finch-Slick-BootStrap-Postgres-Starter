@@ -6,7 +6,7 @@ import io.circe.generic.auto._
 import io.circe.syntax._
 import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
 import org.jose4j.keys.HmacKey
-
+import org.jose4j.lang.JoseException
 
 object Authentication {
 
@@ -15,20 +15,14 @@ object Authentication {
 
   // Represents the result of authentication
   sealed trait AuthenticationResult
-  case class AuthSuccess(jwt:String) extends AuthenticationResult
-  case object AuthFailure extends AuthenticationResult
+  case class  AuthSuccess(jwt:String) extends AuthenticationResult
+  case object AuthFailure             extends AuthenticationResult
 
   // Returns a new signed JWT token
   def grantJWT(userId: Int, isAdmin: Boolean): String = {
     val signature = new JsonWebSignature()
 
-    val payload = JwtPayload(userId, isAdmin)
-
-
-
-
-    signature.setPayload(payload.asJson.toString())
-
+    signature.setPayload(JwtPayload(userId, isAdmin).asJson.toString())
     signature.setAlgorithmHeaderValue(AlgorithmIdentifiers.HMAC_SHA512)
     signature.setHeader("type", "JWT")
     signature.setKey(key)
@@ -40,9 +34,12 @@ object Authentication {
   def verifyJWT(jwt: String): Boolean = {
     val signature = new JsonWebSignature()
 
-    signature.setCompactSerialization(jwt)
-    signature.setKey(key)
-
-    signature.verifySignature()
+    try {
+      signature.setCompactSerialization(jwt)
+      signature.setKey(key)
+      signature.verifySignature()
+    } catch {
+      case e:JoseException => return false
+    }
   }
 }

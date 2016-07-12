@@ -1,6 +1,5 @@
 body {
-    background: url('tablica-ogloszen.png');
-    background-color: #E8E8E8;
+    background: #E8E8E8 url('tablica-ogloszen.png');
 }
 
 h2 {

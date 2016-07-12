@@ -38,15 +38,23 @@ object Main extends TwitterServer {
 
         val payload = sig.getPayload
 
-
         val jwtPayload = decode[JwtPayload](payload) match {
           case Xor.Right(jwtPayload: JwtPayload) => jwtPayload
-          case Xor.Left(e) => throw e
-
+          case Xor.Left(e)                       => throw e
         }
 
-        val a = AppEventDAO.logEvent("127.0.0.1", jwtPayload.userId, AppEventType.App, AppSection.Admin, AppAction.ListUsers, AppActionResult.ActionNormal, AppEventSeverity.Normal)
-        Await.result(a, Duration.Inf)
+        Await.result(
+          AppEventDAO.logEvent(
+            "127.0.0.1",
+            jwtPayload.userId,
+            AppEventType.App,
+            AppSection.Admin,
+            AppAction.ListUsers,
+            AppActionResult.ActionNormal,
+            AppEventSeverity.Normal
+          ),
+          Duration.Inf
+        )
 
         val users: TwitterFuture[Seq[Auth]] = Bijection[Future[Seq[Auth]], TwitterFuture[Seq[Auth]]](tables.AuthDAO.getUsers())
 
@@ -63,25 +71,39 @@ object Main extends TwitterServer {
       (username: String, hash: String) => {
         Bijection[Future[AuthenticationResult], TwitterFuture[AuthenticationResult]](tables.AuthDAO.login(username, hash)).map {
           case AuthSuccess(jwt) => {
-
-
-            val a = AppEventDAO.logEvent( "127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionSuccess, AppEventSeverity.Normal)
-
-            Await.result(a, Duration.Inf)
+            Await.result(
+              AppEventDAO.logEvent(
+                "127.0.0.1",
+                1,
+                AppEventType.Auth,
+                AppSection.Login,
+                AppAction.UserLogin,
+                AppActionResult.ActionSuccess,
+                AppEventSeverity.Normal
+              ),
+              Duration.Inf
+            )
 
             Ok(jwt)
           }
-          case AuthFailure      => {
-            val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionFailure, AppEventSeverity.Minor)
-
-            Await.result(a, Duration.Inf)
+          case AuthFailure => {
+            Await.result(
+              AppEventDAO.logEvent(
+                "127.0.0.1",
+                1,
+                AppEventType.Auth,
+                AppSection.Login,
+                AppAction.UserLogin,
+                AppActionResult.ActionFailure,
+                AppEventSeverity.Minor
+              ),
+              Duration.Inf)
 
             Ok("No such user or incorrect password")
           }
         }
       }
     }
-
 
     val listEvents: Endpoint[String] = get("events") {
       val events: TwitterFuture[Seq[AppEvent]] = Bijection[Future[Seq[AppEvent]], TwitterFuture[Seq[AppEvent]]](tables.AppEventDAO.getAppEvents())
