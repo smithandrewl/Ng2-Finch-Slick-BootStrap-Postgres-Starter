@@ -92,3 +92,7 @@ INSERT INTO AppActionResult (label) VALUES ('ACTION_FAILURE');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_NORMAL');
 
 INSERT INTO AppEvent(timestamp, ipAddress, userId, appeventtype, appsection, appaction, appactionResult, appeventseverity) VALUES (now(), '127.0.0.1', 1, 1, 1, 1, 1, 1);
+
+INSERT INTO public.appevent (appeventid, ipaddress, timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES (36, '127.0.0.1', '2016-07-12 10:24:18.125000', 1, 1, 1, 2, 1, 3);
+INSERT INTO public.appevent (appeventid, ipaddress, timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES (45, '127.0.0.1', '2016-07-12 11:43:40.989000', 1, 1, 1, 2, 2, 1);
+INSERT INTO public.appevent (appeventid, ipaddress, timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES (47, '127.0.0.1', '2016-07-12 11:43:45.147000', 2, 2, 2, 1, 2, 2);
