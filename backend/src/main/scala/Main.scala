@@ -1,4 +1,5 @@
 import Authentication.{AuthFailure, AuthSuccess, AuthenticationResult}
+import cats.data.Xor
 import com.twitter.bijection.Bijection
 import com.twitter.bijection.twitter_util.UtilBijections._
 import com.twitter.finagle.Http
@@ -6,28 +7,53 @@ import com.twitter.finagle.http.filter.Cors
 import com.twitter.finagle.param.Stats
 import com.twitter.server.TwitterServer
 import com.twitter.util.{Future => TwitterFuture}
-import io.circe._
-import io.circe.generic.auto._
-import io.circe.syntax._
-import io.finch._
+
+import org.jose4j.jws.JsonWebSignature
 import tables._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 import scala.util.Try
+import io.circe.Decoder
+import io.circe.jawn._
+import io.circe._
+import io.circe.generic.auto._
+import io.circe.syntax._
+import io.finch._
+
+
 
 object Main extends TwitterServer {
   def main() {
 
-    val api: Endpoint[String] = get("users") {
-      val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.App, AppSection.Admin, AppAction.ListUsers, AppActionResult.ActionNormal, AppEventSeverity.Normal)
+    val api: Endpoint[String] = get("users" :: header("Authorization")) {
 
-      Await.result(a, Duration.Inf)
+      (jwt: String) => {
 
-      val users: TwitterFuture[Seq[Auth]] =  Bijection[Future[Seq[Auth]],TwitterFuture[Seq[Auth]]](tables.AuthDAO.getUsers())
+        val sig = new JsonWebSignature()
 
-      Ok(users.map(usrs => usrs.asJson.toString()))
+        sig.setCompactSerialization(jwt)
+        sig.setKey(Authentication.key)
+
+        val payload = sig.getPayload
+
+
+        val jwtPayload = decode[JwtPayload](payload) match {
+          case Xor.Right(jwtPayload: JwtPayload) => jwtPayload
+          case Xor.Left(e) => throw e
+
+        }
+
+        val a = AppEventDAO.logEvent("127.0.0.1", jwtPayload.userId, AppEventType.App, AppSection.Admin, AppAction.ListUsers, AppActionResult.ActionNormal, AppEventSeverity.Normal)
+        Await.result(a, Duration.Inf)
+
+        val users: TwitterFuture[Seq[Auth]] = Bijection[Future[Seq[Auth]], TwitterFuture[Seq[Auth]]](tables.AuthDAO.getUsers())
+
+        Ok(users.map(usrs => usrs.asJson.toString()))
+
+
+        }
     }
 
     val verifyJWT: Endpoint[String] = get("verify_jwt" :: string) {
@@ -38,7 +64,9 @@ object Main extends TwitterServer {
       (username: String, hash: String) => {
         Bijection[Future[AuthenticationResult], TwitterFuture[AuthenticationResult]](tables.AuthDAO.login(username, hash)).map {
           case AuthSuccess(jwt) => {
-            val a = AppEventDAO.logEvent("127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionSuccess, AppEventSeverity.Normal)
+
+
+            val a = AppEventDAO.logEvent( "127.0.0.1", 1, AppEventType.Auth, AppSection.Login, AppAction.UserLogin, AppActionResult.ActionSuccess, AppEventSeverity.Normal)
 
             Await.result(a, Duration.Inf)
 
@@ -86,6 +114,15 @@ object Main extends TwitterServer {
     implicit val AppActionDecoder = enumDecoder(AppAction)
     implicit val AppActionEncoder = enumEncoder(AppAction)
 
+    implicit val jwtPayloadtEncoder = new Encoder[JwtPayload] {
+      override def apply(jwtPayload: JwtPayload): Json = Encoder.encodeJsonObject {
+        JsonObject.fromMap(Map(
+          "userId" -> jwtPayload.userId.asJson,
+          "isAdmin" -> jwtPayload.isAdmin.asJson
+        ))
+      }
+    }
+
     implicit val appEventEncoder = new Encoder[AppEvent] {
       override def apply(event: AppEvent): Json = Encoder.encodeJsonObject{
         JsonObject.fromMap{
@@ -116,7 +153,7 @@ object Main extends TwitterServer {
     )
 
     val service     = (api :+: authenticate :+: verifyJWT :+: listEvents).toService
-    val corsService = new Cors.HttpFilter(policy).andThen(service) //.andThen(new AuthenticationFilter().andThen(service))
+    val corsService = new Cors.HttpFilter(policy).andThen(new AuthenticationFilter().andThen(service))
     val server      =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
 
     onExit { server.close() }

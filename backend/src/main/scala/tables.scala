@@ -143,11 +143,11 @@ object tables {
     def login(username: String, hash: String): Future[AuthenticationResult] = {
       val query = users.filter(user => user.username === username).
                         filter(user => user.hash     === hash).
-                        map(usr     => usr.isAdmin)
+                        map(usr     => (usr.isAdmin, usr.authId))
 
-      db.run(query.result) map {
-        case Vector(isAdmin) => {
-          Authentication.AuthSuccess(Authentication.grantJWT(isAdmin))
+      db.run(query.result).map {
+        case Vector(row) => {
+          Authentication.AuthSuccess(Authentication.grantJWT(row._2, row._1))
         }
         case _               => {
           AuthFailure

@@ -2,12 +2,21 @@ import java.math.BigInteger
 import java.net.InetSocketAddress
 import java.security.SecureRandom
 
+import com.fasterxml.jackson.core.io.JsonStringEncoder
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finagle.{Filter, Service}
 import com.twitter.util.Future
+import io.circe.{Encoder, Json, JsonObject}
 import org.jboss.netty.handler.codec.http.HttpRequest
 import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
 import org.jose4j.keys.HmacKey
+import io.circe.Decoder
+import io.circe.jawn._
+import io.circe._
+import io.circe.generic.auto._
+import io.circe.syntax._
+import io.finch._
+import tables.AppEvent
 
 
 object Authentication {
@@ -21,10 +30,16 @@ object Authentication {
   case object AuthFailure extends AuthenticationResult
 
   // Returns a new signed JWT token
-  def grantJWT(isAdmin: Boolean): String = {
+  def grantJWT(userId: Int, isAdmin: Boolean): String = {
     val signature = new JsonWebSignature()
 
-    signature.setPayload(s"IsAdmin: $isAdmin")
+    val payload = JwtPayload(userId, isAdmin)
+
+
+
+
+    signature.setPayload(payload.asJson.toString())
+
     signature.setAlgorithmHeaderValue(AlgorithmIdentifiers.HMAC_SHA512)
     signature.setHeader("type", "JWT")
     signature.setKey(key)
