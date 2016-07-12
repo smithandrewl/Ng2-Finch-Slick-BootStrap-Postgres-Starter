@@ -1,1 +1,0 @@
-case class JwtPayload(userId: Int, isAdmin: Boolean)

@@ -1,4 +1,5 @@
 import Authentication.{AuthFailure, AuthSuccess, AuthenticationResult}
+import Model.JwtPayload
 import cats.data.Xor
 import com.twitter.bijection.Bijection
 import com.twitter.bijection.twitter_util.UtilBijections._
@@ -7,7 +8,6 @@ import com.twitter.finagle.http.filter.Cors
 import com.twitter.finagle.param.Stats
 import com.twitter.server.TwitterServer
 import com.twitter.util.{Future => TwitterFuture}
-
 import org.jose4j.jws.JsonWebSignature
 import tables._
 
@@ -22,7 +22,7 @@ import io.circe.generic.auto._
 import io.circe.syntax._
 import io.finch._
 
-
+import Model._
 
 object Main extends TwitterServer {
   def main() {
@@ -51,7 +51,6 @@ object Main extends TwitterServer {
         val users: TwitterFuture[Seq[Auth]] = Bijection[Future[Seq[Auth]], TwitterFuture[Seq[Auth]]](tables.AuthDAO.getUsers())
 
         Ok(users.map(usrs => usrs.asJson.toString()))
-
 
         }
     }
