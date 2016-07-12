@@ -2,6 +2,7 @@ import java.math.BigInteger
 import java.net.InetSocketAddress
 import java.security.SecureRandom
 
+import Model.JwtPayload
 import com.fasterxml.jackson.core.io.JsonStringEncoder
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finagle.{Filter, Service}
