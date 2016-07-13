@@ -15,7 +15,6 @@ export class DataServiceService {
     return this.http.get("http://localhost:8080/events", {headers: headers});
   }
 
-
   getUsers(): Observable<Response>{
     var headers = new Headers();
     headers.append('Authorization', window.localStorage.getItem('jwt'));

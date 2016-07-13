@@ -6,15 +6,15 @@
 
     <table class="table">
       <tr>
-        <th>Username</th>
-        <th>Hash</th>
-        <th>IsAdmin</th>
+        <th><i class="mdi mdi-account"></i>&nbsp;Username</th>
+        <th><i class="mdi mdi-fingerprint"></i> &nbsp;Hash</th>
+        <th><i class="mdi mdi-seal"></i>&nbsp; IsAdmin</th>
       </tr>
 
       <tr *ngFor="let user of userData">
         <td>{{user.username}}</td>
         <td>{{user.hash}}</td>
-        <td>{{user.isAdmin}}</td>
+        <td class="mdi" [class.mdi-checkbox-marked]="user.isAdmin" [class.mdi-checkbox-blank]="!user.isAdmin"></td>
       </tr>
     </table>
 
