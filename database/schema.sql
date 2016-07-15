@@ -70,8 +70,8 @@ CREATE TABLE AppEvent
   CONSTRAINT app_event_fkey_app_event_severity FOREIGN KEY (appeventseverity)     REFERENCES AppEventSeverity (appEventSeverityId)
 );
 
-INSERT INTO Auth (username, hash, isadmin) VALUES ('admin', 'e2875c848ce7f34f266dc26da15fea61ba5dd2ca362a646f860cac8595471f12', TRUE);
-INSERT INTO Auth (username, hash, isadmin) VALUES ('andrew', 'fdsa', TRUE);
+INSERT INTO Auth (username, hash, isadmin) VALUES ('admin', 'changeme', TRUE);
+INSERT INTO Auth (username, hash, isadmin) VALUES ('nonadmin', 'changeme', FALSE);
 
 INSERT INTO AppEventSeverity (label) VALUES ('MINOR');
 INSERT INTO AppEventSeverity (label) VALUES ('NORMAL');
@@ -90,8 +90,6 @@ INSERT INTO AppAction (label) VALUES ('USER_LOGOUT');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_SUCCESS');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_FAILURE');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_NORMAL');
-
-INSERT INTO AppEvent(timestamp, ipAddress, userId, appeventtype, appsection, appaction, appactionResult, appeventseverity) VALUES (now(), '127.0.0.1', 1, 1, 1, 1, 1, 1);
 
 INSERT INTO public.appevent (ipaddress, timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES ('127.0.0.1', '2016-07-12 10:24:18.125000', 1, 1, 1, 2, 1, 3);
 INSERT INTO public.appevent (ipaddress, timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES ('127.0.0.1', '2016-07-12 11:43:40.989000', 1, 1, 1, 2, 2, 1);
