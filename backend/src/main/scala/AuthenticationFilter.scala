@@ -3,6 +3,9 @@ import com.twitter.finagle.{Filter, Service}
 import com.twitter.util.Future
 
 class AuthenticationFilter() extends Filter[Request, Response, Request, Response] {
+
+  val nonAdminRoutes = Seq("/home")
+
   def apply(req: Request, service: Service[Request, Response]): Future[Response] = {
 
     val path = req.path
@@ -20,13 +23,25 @@ class AuthenticationFilter() extends Filter[Request, Response, Request, Response
 
       val invalid = !(isPresent && Authentication.verifyJWT(jwt))
 
-      if (invalid) {
-        // if it is not present or malformed, return a 402 unauthorized
-        val resp = req.response
+      val jwtPayload = Authentication.extractPayload(jwt)
 
-        resp.setStatusCode(402)
+
+      val nonAdminRoute: Boolean = nonAdminRoutes.exists((route: String) => path.startsWith(route))
+
+      val accessGranted = jwtPayload.isAdmin || nonAdminRoute
+      val unauthorized = !accessGranted
+      val resp = req.response
+
+      if (invalid) {
+        // if it is not present or malformed, return a 401 unauthorized
+        resp.setStatusCode(401)
         Future(resp)
 
+      } else if(unauthorized) {
+        // TODO: Log unauthorized user action
+        // if the user is not an admin but going to an admin route, return a 403 access denied
+        resp.setStatusCode(403)
+        Future(resp)
       } else {
         service(req)
       }

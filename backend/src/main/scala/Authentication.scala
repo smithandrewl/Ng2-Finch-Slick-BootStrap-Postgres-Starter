@@ -2,7 +2,9 @@ import java.math.BigInteger
 import java.security.SecureRandom
 
 import Model.JwtPayload
+import cats.data.Xor
 import io.circe.generic.auto._
+import io.circe.jawn._
 import io.circe.syntax._
 import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
 import org.jose4j.keys.HmacKey
@@ -40,6 +42,21 @@ object Authentication {
       signature.verifySignature()
     } catch {
       case e:JoseException => return false
+    }
+  }
+
+  def extractPayload(jwt: String): JwtPayload = {
+
+    val sig = new JsonWebSignature()
+
+    sig.setCompactSerialization(jwt)
+    sig.setKey(Authentication.key)
+
+    val payload = sig.getPayload
+
+    decode[JwtPayload](payload) match {
+      case Xor.Right(jwtPayload: JwtPayload) => jwtPayload
+      case Xor.Left(e)                       => throw e
     }
   }
 }

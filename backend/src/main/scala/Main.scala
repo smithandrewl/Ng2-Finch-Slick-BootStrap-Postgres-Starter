@@ -31,17 +31,7 @@ object Main extends TwitterServer {
 
       (jwt: String) => {
 
-        val sig = new JsonWebSignature()
-
-        sig.setCompactSerialization(jwt)
-        sig.setKey(Authentication.key)
-
-        val payload = sig.getPayload
-
-        val jwtPayload = decode[JwtPayload](payload) match {
-          case Xor.Right(jwtPayload: JwtPayload) => jwtPayload
-          case Xor.Left(e)                       => throw e
-        }
+        val jwtPayload = Authentication.extractPayload(jwt)
 
         Await.result(
           AppEventDAO.logEvent(
