@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {RoutingService} from './routing.service';
+import {JwtHelper} from 'angular2-jwt/';
 
 @Component({
   moduleId: module.id,
@@ -28,7 +29,18 @@ export class LoginAppComponent {
       this.wasError = 'hidden';
       this.isHidden='hidden';
       window.localStorage.setItem('jwt',this.response);
-      this.routingService.changeRoute('/admin');
+
+      var jwtHelper = new JwtHelper();
+
+      var token = jwtHelper.decodeToken(window.localStorage.getItem('jwt'));
+
+      if(token.isAdmin) {
+
+        this.routingService.changeRoute('/admin');
+      } else {
+        this.routingService.changeRoute('/home');
+      }
+
     } else {
       this.wasError = '';
     }

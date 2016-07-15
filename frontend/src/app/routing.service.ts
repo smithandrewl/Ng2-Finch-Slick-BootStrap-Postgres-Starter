@@ -3,6 +3,7 @@ import { Subject }    from 'rxjs/Subject';
 
 @Injectable()
 export class RoutingService {
+
   // Observable string sources
   private currentRoute = new Subject<string>();
 

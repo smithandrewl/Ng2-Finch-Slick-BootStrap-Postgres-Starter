@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers, Response} from "@angular/http";
-import IEvent = data.IEvent;
 import {Observable} from "rxjs/Rx";
-import IUser = data.IUser;
 
 @Injectable()
 export class DataServiceService {

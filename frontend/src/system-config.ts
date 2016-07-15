@@ -3,10 +3,12 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+  'angular2-jwt': 'vendor/angular2-jwt/angular2-jwt.js',
 };
 
 /** User packages configuration. */
 const packages: any = {
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +37,7 @@ const barrels: string[] = [
   'app/app-window',
   'app/admin-user-list',
   'app/event-list',
+  'app/home',
   /** @cli-barrel */
 ];
 
