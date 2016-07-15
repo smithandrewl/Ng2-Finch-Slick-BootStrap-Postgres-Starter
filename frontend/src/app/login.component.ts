@@ -8,7 +8,7 @@ import {JwtHelper} from 'angular2-jwt/';
   moduleId: module.id,
   selector: 'frontend-app',
   templateUrl: 'login.component.html',
-  styleUrls: ['login.component.css'],
+  styleUrls: ['login.component.css']
 })
 export class LoginAppComponent {
   username = '';
