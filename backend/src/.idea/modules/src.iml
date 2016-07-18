@@ -23,6 +23,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="SBT: com.google.code.findbugs:jsr305:2.0.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: de.svenkubiak:jBCrypt:0.4.1:jar" level="project" />
     <orderEntry type="library" name="SBT: com.twitter:bijection-util_2.11:0.9.2:jar" level="project" />
     <orderEntry type="library" name="SBT: com.twitter:bijection-core_2.11:0.9.2:jar" level="project" />
     <orderEntry type="library" name="SBT: org.typelevel:macro-compat_2.11:1.1.1:jar" level="project" />

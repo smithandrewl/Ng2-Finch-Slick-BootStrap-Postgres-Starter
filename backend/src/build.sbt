@@ -31,5 +31,9 @@ libraryDependencies += "com.twitter" % "bijection-core_2.11" % "0.9.2"
 // https://mvnrepository.com/artifact/com.twitter/bijection-util_2.11
 libraryDependencies += "com.twitter" % "bijection-util_2.11" % "0.9.2"
 
+// https://mvnrepository.com/artifact/de.svenkubiak/jBCrypt
+libraryDependencies += "de.svenkubiak" % "jBCrypt" % "0.4.1"
+
+
 
 

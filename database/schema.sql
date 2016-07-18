@@ -70,8 +70,8 @@ CREATE TABLE AppEvent
   CONSTRAINT app_event_fkey_app_event_severity FOREIGN KEY (appeventseverity)     REFERENCES AppEventSeverity (appEventSeverityId)
 );
 
-INSERT INTO Auth (username, hash, isadmin) VALUES ('admin', 'changeme', TRUE);
-INSERT INTO Auth (username, hash, isadmin) VALUES ('nonadmin', 'changeme', FALSE);
+INSERT INTO Auth (username, hash, isadmin) VALUES ('admin', '$2a$04$5AcVtq0UBOMlcsFXlA3oiO9AG2P2Ex9SAePlSvuBC0t9csI/ZrG7C', TRUE);
+INSERT INTO Auth (username, hash, isadmin) VALUES ('nonadmin', '$2a$04$5AcVtq0UBOMlcsFXlA3oiO9AG2P2Ex9SAePlSvuBC0t9csI/ZrG7C', FALSE);
 
 INSERT INTO AppEventSeverity (label) VALUES ('MINOR');
 INSERT INTO AppEventSeverity (label) VALUES ('NORMAL');

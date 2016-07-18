@@ -8,6 +8,7 @@ import Model.AppEventSeverity.AppEventSeverity
 import Model.AppEventType.AppEventType
 import Model.AppSection.AppSection
 import Model._
+import org.mindrot.jbcrypt.BCrypt
 import slick.ast.ColumnOption.PrimaryKey
 import slick.driver.PostgresDriver
 import slick.driver.PostgresDriver.api._
@@ -66,13 +67,18 @@ object tables {
       db.run(users.result)
     }
 
-    def login(username: String, hash: String): Future[AuthenticationResult] = {
+    def login(username: String, pw: String): Future[AuthenticationResult] = {
+
       val query = users.filter(user => user.username === username).
-                        filter(user => user.hash     === hash).
-                        map(usr     => (usr.isAdmin, usr.authId))
+                        map(usr     => (usr.hash, usr.isAdmin, usr.authId))
 
       db.run(query.result).map {
-        case Vector(row) => Authentication.AuthSuccess(Authentication.grantJWT(row._2, row._1))
+        case Vector(row) =>
+          if(BCrypt.checkpw(pw, row._1)) {
+            Authentication.AuthSuccess(Authentication.grantJWT(row._3, row._2))
+          } else {
+            AuthFailure
+          }
         case _ => AuthFailure
       }
     }
