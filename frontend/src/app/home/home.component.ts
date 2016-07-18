@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
   }
   clicked() {
     window.localStorage.removeItem('jwt');
-    alert(window.localStorage.getItem('jwt'));
     this.routingService.changeRoute('');
   }
 

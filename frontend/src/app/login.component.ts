@@ -19,7 +19,7 @@ export class LoginAppComponent {
   constructor(private routingService: RoutingService, public http: Http) {}
 
   onClickSubmit() {
-    this.http.get("http://localhost:8080/authenticate/" + this.username + "/" + this.password).subscribe(this.auth);
+    this.http.get("http://localhost/api/authenticate/" + this.username + "/" + this.password).subscribe(this.auth);
   };
 
   private auth = (resp:Response) => {

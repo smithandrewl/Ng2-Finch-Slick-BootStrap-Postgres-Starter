@@ -10,13 +10,13 @@ export class DataServiceService {
   getEvents(): Observable<Response> {
     var headers = new Headers();
     headers.append('Authorization', window.localStorage.getItem('jwt'));
-    return this.http.get("http://localhost:8080/events", {headers: headers});
+    return this.http.get("http://localhost/api/events", {headers: headers});
   }
 
   getUsers(): Observable<Response>{
     var headers = new Headers();
     headers.append('Authorization', window.localStorage.getItem('jwt'));
-    return this.http.get("http://localhost:8080/users", {headers: headers});
+    return this.http.get("http://localhost/api/users", {headers: headers});
   }
 
 }
