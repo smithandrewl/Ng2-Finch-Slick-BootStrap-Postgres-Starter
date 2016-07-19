@@ -1,12 +1,15 @@
 import com.twitter.finagle.http.{Fields, Request, Response}
 import com.twitter.finagle.{Filter, Service}
 import com.twitter.util.Future
+import org.jose4j.lang.JoseException
 
-class AuthenticationFilter() extends Filter[Request, Response, Request, Response] {
+class AuthenticationFilter()
+    extends Filter[Request, Response, Request, Response] {
 
   val nonAdminRoutes = Seq("/home")
 
-  def apply(req: Request, service: Service[Request, Response]): Future[Response] = {
+  def apply(req: Request,
+            service: Service[Request, Response]): Future[Response] = {
 
     val path = req.path
     val isAuthPath = path.startsWith("/authenticate")
@@ -20,30 +23,39 @@ class AuthenticationFilter() extends Filter[Request, Response, Request, Response
         // Get jwt from authenticate header
         jwt = req.headerMap.getOrElse(Fields.Authorization, "")
       }
-
-      val invalid = !(isPresent && Authentication.verifyJWT(jwt))
-
-      val jwtPayload = Authentication.extractPayload(jwt)
-
-
-      val nonAdminRoute: Boolean = nonAdminRoutes.exists((route: String) => path.startsWith(route))
-
-      val accessGranted = jwtPayload.isAdmin || nonAdminRoute
-      val unauthorized = !accessGranted
       val resp = req.response
 
-      if (invalid) {
-        // if it is not present or malformed, return a 401 unauthorized
-        resp.setStatusCode(401)
-        Future(resp)
+      try {
+        val invalid = !(isPresent && Authentication.verifyJWT(jwt))
 
-      } else if(unauthorized) {
-        // TODO: Log unauthorized user action
-        // if the user is not an admin but going to an admin route, return a 403 access denied
-        resp.setStatusCode(403)
-        Future(resp)
-      } else {
-        service(req)
+        val jwtPayload = Authentication.extractPayload(jwt)
+
+        val nonAdminRoute: Boolean =
+          nonAdminRoutes.exists((route: String) => path.startsWith(route))
+
+        val accessGranted = jwtPayload.isAdmin || nonAdminRoute
+        val unauthorized = !accessGranted
+
+        if (invalid) {
+          // if it is not present or malformed, return a 401 unauthorized
+          resp.setStatusCode(401)
+          Future(resp)
+
+        } else if (unauthorized) {
+          // TODO: Log unauthorized user action
+          // if the user is not an admin but going to an admin route, return a 403 access denied
+          resp.setStatusCode(403)
+          Future(resp)
+        } else {
+          service(req)
+        }
+      } catch {
+        case (e: JoseException) => {
+          // TODO: Log action with invalid JWT
+          // if the Authorization header is present but invalid, return a 401 unauthorized
+          resp.setStatusCode(401)
+          Future(resp)
+        }
       }
     } else {
       service(req)
