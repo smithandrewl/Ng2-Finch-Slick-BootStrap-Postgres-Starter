@@ -73,12 +73,10 @@ object tables {
                         map(usr     => (usr.hash, usr.isAdmin, usr.authId))
 
       db.run(query.result).map {
-        case Vector(row) =>
-          if(BCrypt.checkpw(pw, row._1)) {
-            Authentication.AuthSuccess(Authentication.grantJWT(row._3, row._2))
-          } else {
-            AuthFailure
-          }
+        case Vector(row) => BCrypt.checkpw(pw, row._1) match {
+          case true => Authentication.AuthSuccess(Authentication.grantJWT(row._3, row._2))
+          case _ => AuthFailure
+        }
         case _ => AuthFailure
       }
     }
@@ -106,22 +104,16 @@ object tables {
       )
     }
 
+    // TODO: logging functions should take and log an actual ip address
     def logAdminListUsers(userId: Int): EventInsertFuture = {
       logEvent("127.0.0.1", userId, AppEventType.App, Admin, ListUsers, ActionNormal, Normal)
     }
 
+    // TODO: logUserLogin should log the user id of the user or a null if the username does not exist
     def logUserLogin(success: Boolean): EventInsertFuture = {
       val actionResult = if(success) ActionSuccess else ActionFailure
 
-      logEvent(
-          "127.0.0.1",
-          1,
-          AppEventType.Auth,
-          Login,
-          UserLogin,
-          actionResult,
-          Normal
-        )
+      logEvent("127.0.0.1", 1, AppEventType.Auth, Login, UserLogin, actionResult, Normal)
     }
 
     def insertAppEvent(event: AppEvent)(implicit e:ExecutionContext): EventInsertFuture = {
