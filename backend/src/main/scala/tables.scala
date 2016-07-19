@@ -2,11 +2,11 @@ import java.sql.Timestamp
 import java.time.LocalDateTime
 
 import Authentication.{AuthFailure, AuthenticationResult}
-import Model.AppAction.AppAction
-import Model.AppActionResult.AppActionResult
-import Model.AppEventSeverity.AppEventSeverity
+import Model.AppAction._
+import Model.AppActionResult._
+import Model.AppEventSeverity._
 import Model.AppEventType.AppEventType
-import Model.AppSection.AppSection
+import Model.AppSection._
 import Model._
 import org.mindrot.jbcrypt.BCrypt
 import slick.ast.ColumnOption.PrimaryKey
@@ -15,7 +15,7 @@ import slick.driver.PostgresDriver.api._
 import slick.lifted.{TableQuery, Tag}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 object tables {
 
@@ -85,19 +85,47 @@ object tables {
   }
 
   object AppEventDAO {
+    type EventInsertFuture = Future[PostgresDriver.InsertActionExtensionMethods[tables.EventTable#TableElementType]#SingleInsertResult]
+
     def getAppEvents()(implicit e:ExecutionContext): Future[Seq[AppEvent]] = {
       db.run(events.result)
     }
 
-    def logEvent(ipAddress: String, userId: Int, appEventType: AppEventType, appSection: AppSection, appAction: AppAction, appActionResult: AppActionResult, appEventSeverity: AppEventSeverity): Future[PostgresDriver.InsertActionExtensionMethods[tables.EventTable#TableElementType]#SingleInsertResult] = {
-      insertAppEvent(AppEvent(Timestamp.valueOf(LocalDateTime.now), ipAddress, userId, appEventType, appSection, appAction, appActionResult, appEventSeverity))
+    private[this] def logEvent(ipAddress: String, userId: Int, appEventType: AppEventType, appSection: AppSection, appAction: AppAction, appActionResult: AppActionResult, appEventSeverity: AppEventSeverity): EventInsertFuture = {
+      insertAppEvent(
+        AppEvent(
+          Timestamp.valueOf(LocalDateTime.now),
+          ipAddress,
+          userId,
+          appEventType,
+          appSection,
+          appAction,
+          appActionResult,
+          appEventSeverity
+        )
+      )
     }
 
-    def insertAppEvent(event: AppEvent)(implicit e:ExecutionContext): Future[PostgresDriver.InsertActionExtensionMethods[tables.EventTable#TableElementType]#SingleInsertResult] = {
-      val action = events += event
+    def logAdminListUsers(userId: Int): EventInsertFuture = {
+      logEvent("127.0.0.1", userId, AppEventType.App, Admin, ListUsers, ActionNormal, Normal)
+    }
 
-      val str = action.statements.mkString("\n")
-      db.run(action)
+    def logUserLogin(success: Boolean): EventInsertFuture = {
+      val actionResult = if(success) ActionSuccess else ActionFailure
+
+      logEvent(
+          "127.0.0.1",
+          1,
+          AppEventType.Auth,
+          Login,
+          UserLogin,
+          actionResult,
+          Normal
+        )
+    }
+
+    def insertAppEvent(event: AppEvent)(implicit e:ExecutionContext): EventInsertFuture = {
+      db.run(events += event)
     }
   }
 }

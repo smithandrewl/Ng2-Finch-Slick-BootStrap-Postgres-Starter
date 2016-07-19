@@ -30,27 +30,13 @@ object Main extends TwitterServer {
     val api: Endpoint[String] = get(Routes.ListUsers :: header( Names.AUTHORIZATION)) {
 
       (jwt: String) => {
-
         val jwtPayload = Authentication.extractPayload(jwt)
-
-        Await.result(
-          AppEventDAO.logEvent(
-            "127.0.0.1",
-            jwtPayload.userId,
-            AppEventType.App,
-            AppSection.Admin,
-            AppAction.ListUsers,
-            AppActionResult.ActionNormal,
-            AppEventSeverity.Normal
-          ),
-          Duration.Inf
-        )
-
         val users: TwitterFuture[Seq[Auth]] = Bijection[Future[Seq[Auth]], TwitterFuture[Seq[Auth]]](tables.AuthDAO.getUsers())
 
-        Ok(users.map(usrs => usrs.asJson.toString()))
+        Await.result(AppEventDAO.logAdminListUsers(jwtPayload.userId), Duration.Inf)
 
-        }
+        Ok(users.map(usrs => usrs.asJson.toString()))
+      }
     }
 
     val verifyJWT: Endpoint[String] = get("verify_jwt" :: string) {
@@ -61,33 +47,12 @@ object Main extends TwitterServer {
       (username: String, hash: String) => {
         Bijection[Future[AuthenticationResult], TwitterFuture[AuthenticationResult]](tables.AuthDAO.login(username, hash)).map {
           case AuthSuccess(jwt) => {
-            Await.result(
-              AppEventDAO.logEvent(
-                "127.0.0.1",
-                1,
-                AppEventType.Auth,
-                AppSection.Login,
-                AppAction.UserLogin,
-                AppActionResult.ActionSuccess,
-                AppEventSeverity.Normal
-              ),
-              Duration.Inf
-            )
+            Await.result(AppEventDAO.logUserLogin(true), Duration.Inf)
 
             Ok(jwt)
           }
           case AuthFailure => {
-            Await.result(
-              AppEventDAO.logEvent(
-                "127.0.0.1",
-                1,
-                AppEventType.Auth,
-                AppSection.Login,
-                AppAction.UserLogin,
-                AppActionResult.ActionFailure,
-                AppEventSeverity.Minor
-              ),
-              Duration.Inf)
+            Await.result(AppEventDAO.logUserLogin(false), Duration.Inf)
 
             Ok("No such user or incorrect password")
           }
