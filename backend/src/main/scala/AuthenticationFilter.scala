@@ -37,7 +37,7 @@ class AuthenticationFilter()
         val unauthorized = !accessGranted
 
         if (invalid) {
-          // if it is not present or malformed, return a 401 unauthorized
+          // if it is not present or is not signed with the correct key, return a 401 unauthorized
           resp.setStatusCode(401)
           Future(resp)
 

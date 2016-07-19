@@ -1,6 +1,4 @@
 import Authentication.{AuthFailure, AuthSuccess, AuthenticationResult}
-import Model.JwtPayload
-import cats.data.Xor
 import com.twitter.bijection.Bijection
 import com.twitter.bijection.twitter_util.UtilBijections._
 import com.twitter.finagle.Http
@@ -8,26 +6,28 @@ import com.twitter.finagle.http.filter.Cors
 import com.twitter.finagle.param.Stats
 import com.twitter.server.TwitterServer
 import com.twitter.util.{Future => TwitterFuture}
-import org.jose4j.jws.JsonWebSignature
 import tables._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
-import io.circe.jawn._
-
 import io.circe.generic.auto._
 import io.circe.syntax._
 import io.finch._
 
 import Model._
+
+import org.jboss.netty.handler.codec.http.HttpHeaders._
+
 import JsonCodecs._
+
+
 
 object Main extends TwitterServer {
   def main() {
 
-    val api: Endpoint[String] = get("users" :: header("Authorization")) {
+    val api: Endpoint[String] = get(Routes.ListUsers :: header( Names.AUTHORIZATION)) {
 
       (jwt: String) => {
 
@@ -57,7 +57,7 @@ object Main extends TwitterServer {
       (jwt: String) => Ok("" + Authentication.verifyJWT(jwt))
     }
 
-    val authenticate: Endpoint[String] = get("authenticate" :: string :: string) {
+    val authenticate: Endpoint[String] = get(Routes.Authenticate :: string :: string) {
       (username: String, hash: String) => {
         Bijection[Future[AuthenticationResult], TwitterFuture[AuthenticationResult]](tables.AuthDAO.login(username, hash)).map {
           case AuthSuccess(jwt) => {
@@ -95,7 +95,7 @@ object Main extends TwitterServer {
       }
     }
 
-    val listEvents: Endpoint[String] = get("events") {
+    val listEvents: Endpoint[String] = get(Routes.ListEvents) {
       val events: TwitterFuture[Seq[AppEvent]] = Bijection[Future[Seq[AppEvent]], TwitterFuture[Seq[AppEvent]]](tables.AppEventDAO.getAppEvents())
 
       Ok(events.map(events => events.asJson.toString()))
@@ -104,7 +104,7 @@ object Main extends TwitterServer {
     val policy: Cors.Policy = Cors.Policy(
       allowsOrigin  = _ => Some("*"),
       allowsMethods = _ => Some(Seq("GET", "POST")),
-      allowsHeaders = _ => Some(Seq("Accept", "Authorization", "Access-Control-Allow-Origin"))
+      allowsHeaders = _ => Some(Seq(Names.ACCEPT, Names.AUTHORIZATION, Names.ACCESS_CONTROL_ALLOW_CREDENTIALS))
     )
 
     val service     = (api :+: authenticate :+: verifyJWT :+: listEvents).toService

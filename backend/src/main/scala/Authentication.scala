@@ -41,7 +41,7 @@ object Authentication {
       signature.setKey(key)
       signature.verifySignature()
     } catch {
-      case e:JoseException => return false
+      case e:JoseException => false
     }
   }
 
