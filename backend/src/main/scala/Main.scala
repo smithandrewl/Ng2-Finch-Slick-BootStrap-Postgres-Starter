@@ -66,13 +66,28 @@ object Main extends TwitterServer {
       Ok(events.map(events => events.asJson.toString()))
     }
 
+    val clearEvents: Endpoint[String] = get(Routes.ClearEventLog :: header(Names.AUTHORIZATION)) {
+      (jwt: String) => {
+        val result = Bijection[Future[Int], TwitterFuture[Int]](tables.AppEventDAO.clearAppEvents())
+
+        val jwtPayload = Authentication.extractPayload(jwt)
+        val userId = jwtPayload.userId
+
+        Await.ready(AppEventDAO.logAdminClearEventLog(userId), Duration.Inf)
+
+        result.map((a: Int) => {
+          Ok("")
+        })
+      }
+    }
+
     val policy: Cors.Policy = Cors.Policy(
       allowsOrigin  = _ => Some("*"),
       allowsMethods = _ => Some(Seq("GET", "POST")),
       allowsHeaders = _ => Some(Seq(Names.ACCEPT, Names.AUTHORIZATION, Names.ACCESS_CONTROL_ALLOW_CREDENTIALS))
     )
 
-    val service     = (api :+: authenticate :+: verifyJWT :+: listEvents).toService
+    val service     = (api :+: authenticate :+: verifyJWT :+: listEvents :+: clearEvents).toService
     val corsService = new Cors.HttpFilter(policy).andThen(new AuthenticationFilter().andThen(service))
     val server      =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
 
@@ -80,4 +95,6 @@ object Main extends TwitterServer {
 
     com.twitter.util.Await.ready(server)
   }
+
+
 }

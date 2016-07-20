@@ -86,6 +86,7 @@ INSERT INTO AppSection (label) VALUES ('ADMIN');
 INSERT INTO AppAction (label) VALUES ('LIST_USERS');
 INSERT INTO AppAction (label) VALUES ('USER_LOGIN');
 INSERT INTO AppAction (label) VALUES ('USER_LOGOUT');
+INSERT INTO AppAction (label) VALUES ('CLEAR_EVENT_LOG');
 
 INSERT INTO AppActionResult (label) VALUES ('ACTION_SUCCESS');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_FAILURE');

@@ -1,6 +1,6 @@
 
 <div class="panel panel-default">
-  <div class="panel-heading">Events</div>
+  <div class="panel-heading">Events <button class="btn btn-danger" (click) = "clear()"></button> </div>
   <div class="panel-body">
 
     <table class="table">
@@ -16,7 +16,7 @@
         <th>Event Severity</th>
       </tr>
 
-      <tr *ngFor="let event of eventData" [class.sev-minor]="event.Severity == 'Minor'" [class.sev-major]="event.Severity == 'Major'" [class.action-result-success]="event.Result == 'ActionSuccess'">
+      <tr *ngFor="let event of eventData" [class.action-result-success]="event.Result == 'ActionSuccess' && event.Severity == 'Normal'" [class.sev-minor]="event.Severity == 'Minor'" [class.sev-major]="event.Severity == 'Major'" >
         <td>{{event.Timestamp | date: 'yyyy/MM/dd hh:mm:ss a'}}</td>
         <td>{{event.IPAddress}}</td>
         <td>{{event.User}}</td>

@@ -23,4 +23,8 @@ export class EventListComponent implements OnInit {
   private events = (response: Response) => {
     this.eventData = response.json();
   };
+
+  clear() {
+    this.dataService.clearEventLogs();
+  }
 }

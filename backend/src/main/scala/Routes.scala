@@ -5,4 +5,5 @@ object Routes {
   val Authenticate = "authenticate"
   val ListEvents   = "events"
   val ListUsers    = "users"
+  val ClearEventLog = "cleareventlog"
 }

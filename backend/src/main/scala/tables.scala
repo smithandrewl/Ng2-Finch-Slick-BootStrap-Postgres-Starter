@@ -85,6 +85,10 @@ object tables {
   object AppEventDAO {
     type EventInsertFuture = Future[PostgresDriver.InsertActionExtensionMethods[tables.EventTable#TableElementType]#SingleInsertResult]
 
+    def clearAppEvents()(implicit e:ExecutionContext): Future[Int] = {
+      db.run(events.delete)
+    }
+
     def getAppEvents()(implicit e:ExecutionContext): Future[Seq[AppEvent]] = {
       db.run(events.result)
     }
@@ -105,6 +109,11 @@ object tables {
     }
 
     // TODO: logging functions should take and log an actual ip address
+
+    def logAdminClearEventLog(userId: Int): EventInsertFuture = {
+      logEvent("127.0.0.1", userId, AppEventType.App, AppSection.Admin, ClearEventLog, ActionSuccess, Major)
+    }
+
     def logAdminListUsers(userId: Int): EventInsertFuture = {
       logEvent("127.0.0.1", userId, AppEventType.App, Admin, ListUsers, ActionNormal, Normal)
     }
@@ -112,8 +121,9 @@ object tables {
     // TODO: logUserLogin should log the user id of the user or a null if the username does not exist
     def logUserLogin(success: Boolean): EventInsertFuture = {
       val actionResult = if(success) ActionSuccess else ActionFailure
+      val sev = if(success) Normal else Minor
 
-      logEvent("127.0.0.1", 1, AppEventType.Auth, Login, UserLogin, actionResult, Normal)
+      logEvent("127.0.0.1", 1, AppEventType.Auth, Login, UserLogin, actionResult, sev)
     }
 
     def insertAppEvent(event: AppEvent)(implicit e:ExecutionContext): EventInsertFuture = {
