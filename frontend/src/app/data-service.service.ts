@@ -17,11 +17,11 @@ export class DataServiceService {
     var headers = new Headers();
     headers.append('Authorization', window.localStorage.getItem('jwt'));
     return this.http.get("http://localhost/api/users", {headers: headers});
-  }
+    }
 
-  clearEventLogs() {
-    var headers = new Headers();
-    headers.append('Authorization', window.localStorage.getItem('jwt'));
-    this.http.get("http://localhost/api/clearevents", {headers:headers});
+    clearEventLogs() {
+      var headers = new Headers();
+      headers.append('Authorization', window.localStorage.getItem('jwt'));
+      return this.http.get("http://localhost/api/cleareventlog", {headers:headers});
   }
 }

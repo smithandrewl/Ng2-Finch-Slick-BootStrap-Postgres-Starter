@@ -25,6 +25,10 @@ export class EventListComponent implements OnInit {
   };
 
   clear() {
-    this.dataService.clearEventLogs();
+    this.dataService.clearEventLogs().subscribe(this.cleared);
+  }
+
+  private cleared = (response: Response) => {
+    this.dataService.getEvents().subscribe(this.events);
   }
 }
