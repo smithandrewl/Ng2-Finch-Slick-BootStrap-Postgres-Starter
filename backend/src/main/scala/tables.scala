@@ -90,7 +90,7 @@ object tables {
     }
 
     def getAppEvents()(implicit e:ExecutionContext): Future[Seq[AppEvent]] = {
-      db.run(events.result)
+      db.run(events.sortBy(_.timestamp.desc.desc).result)
     }
 
     private[this] def logEvent(ipAddress: String, userId: Int, appEventType: AppEventType, appSection: AppSection, appAction: AppAction, appActionResult: AppActionResult, appEventSeverity: AppEventSeverity): EventInsertFuture = {
