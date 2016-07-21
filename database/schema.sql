@@ -62,7 +62,7 @@ CREATE TABLE AppEvent
   appactionResult      INT       NOT NULL,
   appeventseverity     INT       NOT NULL,
   CONSTRAINT app_event_pkey PRIMARY KEY (appEventId),
-  CONSTRAINT app_event_fkey_auth_authid        FOREIGN KEY (userId)       REFERENCES Auth             (authid),
+  CONSTRAINT app_event_fkey_auth_authid        FOREIGN KEY (userId)       REFERENCES Auth             (authid) on delete CASCADE,
   CONSTRAINT app_event_fkey_app_event_type     FOREIGN KEY (appeventtype)     REFERENCES AppEventType     (appEventTypeId),
   CONSTRAINT app_event_fkey_app_section        FOREIGN KEY (appsection)      REFERENCES AppSection       (appSectionId),
   CONSTRAINT app_event_fkey_app_action         FOREIGN KEY (appaction)       REFERENCES AppAction        (appActionId),
@@ -87,6 +87,7 @@ INSERT INTO AppAction (label) VALUES ('LIST_USERS');
 INSERT INTO AppAction (label) VALUES ('USER_LOGIN');
 INSERT INTO AppAction (label) VALUES ('USER_LOGOUT');
 INSERT INTO AppAction (label) VALUES ('CLEAR_EVENT_LOG');
+INSERT INTO AppAction (label) VALUES ('DELETE_USER');
 
 INSERT INTO AppActionResult (label) VALUES ('ACTION_SUCCESS');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_FAILURE');

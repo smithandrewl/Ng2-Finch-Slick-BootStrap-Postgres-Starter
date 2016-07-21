@@ -24,4 +24,15 @@ export class AdminUserListComponent implements OnInit {
   private users = (response: Response) => {
     this.userData = response.json();
   };
+
+  private onDelete = (resp: Response) => {
+    this.userData = [];
+    this.dataService.getUsers().subscribe(this.users);
+  }
+
+  private delete(userId: number)  {
+    this.dataService.deleteUser(userId).subscribe(this.onDelete);
+  }
+
+
 }

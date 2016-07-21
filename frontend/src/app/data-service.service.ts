@@ -8,20 +8,24 @@ export class DataServiceService {
   constructor(public http: Http) {}
 
   getEvents(): Observable<Response> {
-    var headers = new Headers();
-    headers.append('Authorization', window.localStorage.getItem('jwt'));
-    return this.http.get("/api/events", {headers: headers});
+    return this.http.get("/api/events", {headers: this.getHeaders()});
   }
 
-  getUsers(): Observable<Response>{
-    var headers = new Headers();
-    headers.append('Authorization', window.localStorage.getItem('jwt'));
-    return this.http.get("/api/users", {headers: headers});
+  private getHeaders() {
+      var headers = new Headers();
+      headers.append('Authorization', window.localStorage.getItem('jwt'));
+      return headers;
+  }
+
+  getUsers(): Observable<Response> {
+    return this.http.get("/api/users", {headers: this.getHeaders()});
     }
 
     clearEventLogs() {
-      var headers = new Headers();
-      headers.append('Authorization', window.localStorage.getItem('jwt'));
-      return this.http.get("/api/cleareventlog", {headers:headers});
+      return this.http.get("/api/cleareventlog", {headers: this.getHeaders()});
+  }
+
+  deleteUser(id: number){
+    return this.http.get("/api/deleteuser/" + id, {headers: this.getHeaders()});
   }
 }

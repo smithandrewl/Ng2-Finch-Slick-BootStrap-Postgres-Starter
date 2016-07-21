@@ -63,6 +63,11 @@ object tables {
 
   /************* DAO Objects **************************************************/
   object AuthDAO {
+    def deleteUser(id: Int): Future[Int] = {
+      db.run(users.filter(_.authId === id).delete)
+
+    }
+
     def getUsers()(implicit e: ExecutionContext): Future[Seq[Auth]] = {
       db.run(users.result)
     }
@@ -85,9 +90,7 @@ object tables {
   object AppEventDAO {
     type EventInsertFuture = Future[PostgresDriver.InsertActionExtensionMethods[tables.EventTable#TableElementType]#SingleInsertResult]
 
-    def clearAppEvents()(implicit e:ExecutionContext): Future[Int] = {
-      db.run(events.delete)
-    }
+    def clearAppEvents()(implicit e:ExecutionContext): Future[Int] = db.run(events.delete)
 
     def getAppEvents()(implicit e:ExecutionContext): Future[Seq[AppEvent]] = {
       db.run(events.sortBy(_.timestamp.desc.desc).result)
@@ -124,6 +127,12 @@ object tables {
       val sev = if(success) Normal else Minor
 
       logEvent("127.0.0.1", 1, AppEventType.Auth, Login, UserLogin, actionResult, sev)
+    }
+
+    def logDeleteUser(userId: Int, worked: Boolean): EventInsertFuture = {
+      val success = if(worked) ActionSuccess else ActionFailure
+
+      logEvent("127.0.0.1", userId, AppEventType.App, Admin, DeleteUser, success, Major)
     }
 
     def insertAppEvent(event: AppEvent)(implicit e:ExecutionContext): EventInsertFuture = {

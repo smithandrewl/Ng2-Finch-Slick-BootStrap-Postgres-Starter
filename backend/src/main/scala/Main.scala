@@ -26,7 +26,27 @@ import JsonCodecs._
 
 object Main extends TwitterServer {
   def main() {
+    val deleteUser:Endpoint[String] = get(Routes.DeleteUser :: int::header(Names.AUTHORIZATION)) {
+      (id: Int, jwt: String) => {
 
+        var jwtPayload = Authentication.extractPayload(jwt)
+
+        val result = Bijection[Future[Int], TwitterFuture[Int]](tables.AuthDAO.deleteUser(id))
+
+        result.map{
+          case 0 => {
+            Await.result(AppEventDAO.logDeleteUser(jwtPayload.userId, false), Duration.Inf)
+            InternalServerError(new Exception("Failed to delete user"))
+          }
+
+          case _ => {
+            Await.result(AppEventDAO.logDeleteUser(jwtPayload.userId, true), Duration.Inf)
+            Ok("")
+          }
+        }
+
+      }
+    }
     val api: Endpoint[String] = get(Routes.ListUsers :: header( Names.AUTHORIZATION)) {
 
       (jwt: String) => {
@@ -87,7 +107,7 @@ object Main extends TwitterServer {
       allowsHeaders = _ => Some(Seq(Names.ACCEPT, Names.AUTHORIZATION, Names.ACCESS_CONTROL_ALLOW_CREDENTIALS))
     )
 
-    val service     = (api :+: authenticate :+: verifyJWT :+: listEvents :+: clearEvents).toService
+    val service     = (api :+: authenticate :+: verifyJWT :+: listEvents :+: clearEvents :+: deleteUser).toService
     val corsService = new Cors.HttpFilter(policy).andThen(new AuthenticationFilter().andThen(service))
     val server      =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
 
