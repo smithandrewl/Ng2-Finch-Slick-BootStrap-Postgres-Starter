@@ -19,7 +19,7 @@ export class LoginAppComponent {
   constructor(private routingService: RoutingService, public http: Http) {}
 
   onClickSubmit() {
-    this.http.get("http://localhost/api/authenticate/" + this.username + "/" + this.password).subscribe(
+    this.http.get("/api/authenticate/" + this.username + "/" + this.password).subscribe(
         this.auth,
         error => {
           this.response = "Unable to contact server";
