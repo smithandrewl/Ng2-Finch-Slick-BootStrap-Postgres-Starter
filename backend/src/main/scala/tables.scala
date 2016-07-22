@@ -8,6 +8,7 @@ import Model.AppEventSeverity._
 import Model.AppEventType.AppEventType
 import Model.AppSection._
 import Model._
+import com.twitter.logging.Logger
 import org.mindrot.jbcrypt.BCrypt
 import slick.ast.ColumnOption.PrimaryKey
 import slick.driver.PostgresDriver
@@ -18,6 +19,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Await, ExecutionContext, Future}
 
 object tables {
+
+
+  val logger = Logger("tables")
 
   val db: Database = Database.forURL(
     url    = "jdbc:postgresql://localhost/many_tasks",
@@ -108,8 +112,6 @@ object tables {
         )
       )
     }
-
-    // TODO: logging functions should take and log an actual ip address
 
     def logAdminClearEventLog(userId: Int): EventInsertFuture = {
       logEvent(userId, AppEventType.App, AppSection.Admin, ClearEventLog, ActionSuccess, Major)

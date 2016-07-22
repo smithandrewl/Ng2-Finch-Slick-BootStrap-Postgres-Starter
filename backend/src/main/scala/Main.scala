@@ -11,20 +11,17 @@ import tables._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
-
 import io.circe.generic.auto._
 import io.circe.syntax._
 import io.finch._
-
 import Model._
-
 import org.jboss.netty.handler.codec.http.HttpHeaders._
-
 import JsonCodecs._
+import com.twitter.logging.Logger
 
 
 
-object Main extends TwitterServer {
+object Main extends TwitterServer  {
   def main() {
     val deleteUser:Endpoint[String] = get(Routes.DeleteUser :: int::header(Names.AUTHORIZATION)) {
       (id: Int, jwt: String) => {
@@ -35,16 +32,24 @@ object Main extends TwitterServer {
 
         result.map{
           case 0 => {
+
             Await.result(AppEventDAO.logDeleteUser(jwtPayload.userId, false), Duration.Inf)
-            InternalServerError(new Exception("Failed to delete user"))
+            val cause: Exception = new Exception("Failed to delete user")
+
+            log.warning(cause, s"User with UID = ${jwtPayload.userId} Failed to delete user with UID = $id")
+
+            InternalServerError(cause)
           }
 
           case _ => {
             Await.result(AppEventDAO.logDeleteUser(jwtPayload.userId, true), Duration.Inf)
+
+            log.debug(s"User with UID = ${jwtPayload.userId} deleted user with UID = $id")
+
             Ok("")
+
           }
         }
-
       }
     }
     val api: Endpoint[String] = get(Routes.ListUsers :: header( Names.AUTHORIZATION)) {
@@ -54,6 +59,8 @@ object Main extends TwitterServer {
         val users: TwitterFuture[Seq[Auth]] = Bijection[Future[Seq[Auth]], TwitterFuture[Seq[Auth]]](tables.AuthDAO.getUsers())
 
         Await.result(AppEventDAO.logAdminListUsers(jwtPayload.userId), Duration.Inf)
+
+        log.debug(s"User with UID = ${jwtPayload.userId} listed the users")
 
         Ok(users.map(usrs => usrs.asJson(JsonCodecs.authSeqEncoder) .toString()))
       }
@@ -67,12 +74,18 @@ object Main extends TwitterServer {
       (username: String, hash: String) => {
         Bijection[Future[AuthenticationResult], TwitterFuture[AuthenticationResult]](tables.AuthDAO.login(username, hash)).map {
           case AuthSuccess(jwt) => {
+            val jwtPayload = Authentication.extractPayload(jwt)
+
             Await.result(AppEventDAO.logUserLogin(true), Duration.Inf)
+
+            log.debug(s"User $username with UID = ${jwtPayload.userId} just logged in")
 
             Ok(jwt)
           }
           case AuthFailure => {
             Await.result(AppEventDAO.logUserLogin(false), Duration.Inf)
+
+            log.debug("User login failed")
 
             Ok("No such user or incorrect password")
           }
@@ -80,10 +93,19 @@ object Main extends TwitterServer {
       }
     }
 
-    val listEvents: Endpoint[String] = get(Routes.ListEvents) {
-      val events: TwitterFuture[Seq[AppEvent]] = Bijection[Future[Seq[AppEvent]], TwitterFuture[Seq[AppEvent]]](tables.AppEventDAO.getAppEvents())
+    val listEvents: Endpoint[String] = get(Routes.ListEvents :: header(Names.AUTHORIZATION)) {
 
-      Ok(events.map(events => events.asJson.toString()))
+      (jwt: String) => {
+
+        val jwtPayload = Authentication.extractPayload(jwt)
+        val userId = jwtPayload.userId
+
+        val events: TwitterFuture[Seq[AppEvent]] = Bijection[Future[Seq[AppEvent]], TwitterFuture[Seq[AppEvent]]](tables.AppEventDAO.getAppEvents())
+
+        log.debug(s"User with UID = $userId listed events")
+
+        Ok(events.map(events => events.asJson.toString()))
+      }
     }
 
     val clearEvents: Endpoint[String] = get(Routes.ClearEventLog :: header(Names.AUTHORIZATION)) {
@@ -94,6 +116,8 @@ object Main extends TwitterServer {
         val userId = jwtPayload.userId
 
         Await.ready(AppEventDAO.logAdminClearEventLog(userId), Duration.Inf)
+
+        log.debug(s"User with UID = $userId cleared the event log")
 
         result.map((a: Int) => {
           Ok("")
