@@ -7,7 +7,6 @@
       <tr>
 
         <th><div class="mdi mdi-timetable"></div>Timestamp</th>
-        <th> <div class="mdi mdi-account-network"></div>IP Address</th>
         <th> <div class="mdi mdi-key-variant"></div> User Id</th>
         <th>Event Type</th>
         <th>Section</th>
@@ -18,7 +17,6 @@
 
       <tr *ngFor="let event of eventData" [class.action-result-success]="event.Result == 'ActionSuccess' && event.Severity == 'Normal'" [class.sev-minor]="event.Severity == 'Minor'" [class.sev-major]="event.Severity == 'Major'" >
         <td>{{event.Timestamp | date: 'yyyy/MM/dd hh:mm:ss a'}}</td>
-        <td>{{event.IPAddress}}</td>
         <td>{{event.User}}</td>
         <td>{{event.Type}}</td>
         <td>{{event.Section}}</td>

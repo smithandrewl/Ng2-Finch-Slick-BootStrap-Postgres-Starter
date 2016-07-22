@@ -42,7 +42,6 @@ object JsonCodecs {
       JsonObject.fromMap{
         Map(
           "Timestamp" -> Encoder.encodeString(event.timestamp.toString),
-          "IPAddress" -> Encoder.encodeString(event.ipAddress),
           "User"      -> Encoder.encodeInt(event.userId),
           "Type"      -> appEventTypeEncoder(event.appEventType),
           "Section"   -> appSectionEncoder(event.appSection),

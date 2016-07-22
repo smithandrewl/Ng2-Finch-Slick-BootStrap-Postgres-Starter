@@ -53,7 +53,6 @@ CREATE TABLE AppActionResult
 CREATE TABLE AppEvent
 (
   appEventId   SERIAL,
-  ipAddress    VARCHAR(39)      NOT NULL,
   timestamp    TIMESTAMP NOT NULL,
   userId       INT       NOT NULL,
   appeventtype     INT       NOT NULL,
@@ -93,6 +92,6 @@ INSERT INTO AppActionResult (label) VALUES ('ACTION_SUCCESS');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_FAILURE');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_NORMAL');
 
-INSERT INTO public.appevent (ipaddress, timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES ('127.0.0.1', '2016-07-12 10:24:18.125000', 1, 1, 1, 2, 1, 3);
-INSERT INTO public.appevent (ipaddress, timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES ('127.0.0.1', '2016-07-12 11:43:40.989000', 1, 1, 1, 2, 2, 1);
-INSERT INTO public.appevent (ipaddress, timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES ('127.0.0.1', '2016-07-12 11:43:45.147000', 2, 2, 2, 1, 2, 2);
+INSERT INTO public.appevent (timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES ( '2016-07-12 10:24:18.125000', 1, 1, 1, 2, 1, 3);
+INSERT INTO public.appevent (timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES ('2016-07-12 11:43:40.989000', 1, 1, 1, 2, 2, 1);
+INSERT INTO public.appevent (timestamp, userid, appeventtype, appsection, appaction, appactionresult, appeventseverity) VALUES ('2016-07-12 11:43:45.147000', 2, 2, 2, 1, 2, 2);

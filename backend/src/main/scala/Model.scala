@@ -51,7 +51,6 @@ object Model {
   }
 
   case class AppEvent(timestamp:        Timestamp,
-                      ipAddress:        String,
                       userId:           Int,
                       appEventType:     AppEventType,
                       appSection:       AppSection,

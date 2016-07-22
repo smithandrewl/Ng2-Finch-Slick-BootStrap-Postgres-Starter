@@ -48,7 +48,6 @@ object tables {
 
   class EventTable(tag: Tag) extends Table[AppEvent](tag, "appevent") {
     def timestamp        = column[Timestamp]       ("timestamp")
-    def ipAddress        = column[String]          ("ipaddress")
     def userId           = column[Int]             ("userid")
     def appEventType     = column[AppEventType]    ("appeventtype")
     def appSection       = column[AppSection]      ("appsection")
@@ -56,7 +55,7 @@ object tables {
     def appActionResult  = column[AppActionResult] ("appactionresult")
     def appEventSeverity = column[AppEventSeverity]("appeventseverity")
 
-    def * = (timestamp, ipAddress, userId, appEventType, appSection, appAction, appActionResult, appEventSeverity) <> ((AppEvent.apply _).tupled, AppEvent.unapply)
+    def * = (timestamp, userId, appEventType, appSection, appAction, appActionResult, appEventSeverity) <> ((AppEvent.apply _).tupled, AppEvent.unapply)
   }
 
   val events = TableQuery[EventTable]
@@ -96,11 +95,10 @@ object tables {
       db.run(events.sortBy(_.timestamp.desc.desc).result)
     }
 
-    private[this] def logEvent(ipAddress: String, userId: Int, appEventType: AppEventType, appSection: AppSection, appAction: AppAction, appActionResult: AppActionResult, appEventSeverity: AppEventSeverity): EventInsertFuture = {
+    private[this] def logEvent(userId: Int, appEventType: AppEventType, appSection: AppSection, appAction: AppAction, appActionResult: AppActionResult, appEventSeverity: AppEventSeverity): EventInsertFuture = {
       insertAppEvent(
         AppEvent(
           Timestamp.valueOf(LocalDateTime.now),
-          ipAddress,
           userId,
           appEventType,
           appSection,
@@ -114,11 +112,11 @@ object tables {
     // TODO: logging functions should take and log an actual ip address
 
     def logAdminClearEventLog(userId: Int): EventInsertFuture = {
-      logEvent("127.0.0.1", userId, AppEventType.App, AppSection.Admin, ClearEventLog, ActionSuccess, Major)
+      logEvent(userId, AppEventType.App, AppSection.Admin, ClearEventLog, ActionSuccess, Major)
     }
 
     def logAdminListUsers(userId: Int): EventInsertFuture = {
-      logEvent("127.0.0.1", userId, AppEventType.App, Admin, ListUsers, ActionNormal, Normal)
+      logEvent(userId, AppEventType.App, Admin, ListUsers, ActionNormal, Normal)
     }
 
     // TODO: logUserLogin should log the user id of the user or a null if the username does not exist
@@ -126,13 +124,13 @@ object tables {
       val actionResult = if(success) ActionSuccess else ActionFailure
       val sev = if(success) Normal else Minor
 
-      logEvent("127.0.0.1", 1, AppEventType.Auth, Login, UserLogin, actionResult, sev)
+      logEvent(1, AppEventType.Auth, Login, UserLogin, actionResult, sev)
     }
 
     def logDeleteUser(userId: Int, worked: Boolean): EventInsertFuture = {
       val success = if(worked) ActionSuccess else ActionFailure
 
-      logEvent("127.0.0.1", userId, AppEventType.App, Admin, DeleteUser, success, Major)
+      logEvent(userId, AppEventType.App, Admin, DeleteUser, success, Major)
     }
 
     def insertAppEvent(event: AppEvent)(implicit e:ExecutionContext): EventInsertFuture = {
