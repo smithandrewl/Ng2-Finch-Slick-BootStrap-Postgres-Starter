@@ -55,7 +55,7 @@ object Main extends TwitterServer {
 
         Await.result(AppEventDAO.logAdminListUsers(jwtPayload.userId), Duration.Inf)
 
-        Ok(users.map(usrs => usrs.asJson.toString()))
+        Ok(users.map(usrs => usrs.asJson(JsonCodecs.authSeqEncoder) .toString()))
       }
     }
 

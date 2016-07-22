@@ -28,6 +28,24 @@ object JsonCodecs {
   implicit val appActionResultEncoder  = enumEncoder(AppActionResult)
   implicit val AppActionEncoder        = enumEncoder(AppAction)
 
+  implicit val authEncoder = new Encoder[Auth] {
+    override def apply(a: Auth): Json = {
+      Encoder.encodeJsonObject {
+        JsonObject.fromMap(Map(
+          "userId" -> a.userId.asJson,
+          "username" -> a.username.asJson,
+          "isAdmin" -> a.isAdmin.asJson
+        ))
+      }
+    }
+  }
+
+  implicit val authSeqEncoder = new Encoder[Seq[Auth]] {
+    override def apply(a: Seq[Auth]): Json = {
+      Json.fromValues(a.map(_.asJson))
+    }
+  }
+
   implicit val jwtPayloadtEncoder = new Encoder[JwtPayload] {
     override def apply(jwtPayload: JwtPayload): Json = Encoder.encodeJsonObject {
       JsonObject.fromMap(Map(

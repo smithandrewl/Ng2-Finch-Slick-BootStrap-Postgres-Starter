@@ -7,14 +7,12 @@
     <table class="table">
       <tr>
         <th><i class="mdi mdi-account"></i>&nbsp;Username</th>
-        <th><i class="mdi mdi-fingerprint"></i> &nbsp;Hash</th>
         <th><i class="mdi mdi-seal"></i>&nbsp; IsAdmin</th>
         <th><i class="mdi mdi-delete"></i>&nbsp; Delete</th>
       </tr>
 
       <tr *ngFor="let user of userData">
         <td>{{user.username}}</td>
-        <td>{{user.hash}}</td>
         <td class="mdi" [class.mdi-checkbox-marked]="user.isAdmin" [class.mdi-checkbox-blank]="!user.isAdmin"></td>
         <td><btn class="btn btn-xs btn-danger" (click)="delete(user.userId)">X</btn></td>
       </tr>
