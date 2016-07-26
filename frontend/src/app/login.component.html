@@ -4,7 +4,7 @@
      <div class="panel-title">Please sign in</div>
       </div>
     <div class="panel-body">
-  <form class="form-signin">
+  <form id="login-form" class="form-signin" >
 
 
     <div class="input-group">
@@ -20,7 +20,7 @@
       <input [(ngModel)]="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
     </div>
     <br/>
-    <button (click)="onClickSubmit()" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" (click) = "onClickSubmit()">Sign in</button>
     <br/>
     <div class="alert alert-danger {{wasError}}">{{response}}</div>
   </form>

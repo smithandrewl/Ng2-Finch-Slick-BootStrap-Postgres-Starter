@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {RoutingService} from './routing.service';
 import {JwtHelper} from 'angular2-jwt/';
+import {Form} from "@angular/common";
 
 @Component({
   moduleId: module.id,
@@ -19,14 +20,20 @@ export class LoginAppComponent {
   constructor(private routingService: RoutingService, public http: Http) {}
 
   onClickSubmit() {
-    this.http.get("/api/authenticate/" + this.username + "/" + this.password).subscribe(
-        this.auth,
-        error => {
-          this.response = "Unable to contact server";
-          this.wasError = '';
 
-        }
-    );
+    this.wasError = 'hidden';
+    var form: HTMLFormElement = <HTMLFormElement>document.getElementById('login-form');
+
+    if(form.checkValidity()) {
+      this.http.get("/api/authenticate/" + this.username + "/" + this.password).subscribe(
+          this.auth,
+          error => {
+            this.response = "Unable to contact server";
+            this.wasError = '';
+
+          }
+      );
+    }
   };
 
   private auth = (resp:Response) => {
