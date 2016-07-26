@@ -1,3 +1,5 @@
+package org.smithandrewl.starter.util
+
 /**
   * Created by andrew on 7/19/16.
   */

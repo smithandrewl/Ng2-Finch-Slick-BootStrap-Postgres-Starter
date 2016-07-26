@@ -1,22 +1,26 @@
+package org.smithandrewl.starter.db
+
 import java.sql.Timestamp
 import java.time.LocalDateTime
 
-import Authentication.{AuthFailure, AuthenticationResult}
-import Model.AppAction._
-import Model.AppActionResult._
-import Model.AppEventSeverity._
-import Model.AppEventType.AppEventType
-import Model.AppSection._
-import Model._
 import com.twitter.logging.Logger
 import org.mindrot.jbcrypt.BCrypt
+import org.smithandrewl.starter.auth.Authentication
+import org.smithandrewl.starter.auth.Authentication.{AuthFailure, AuthenticationResult}
+import org.smithandrewl.starter.model.Model.AppAction._
+import org.smithandrewl.starter.model.Model.AppActionResult._
+import org.smithandrewl.starter.model.Model.AppEventSeverity._
+import org.smithandrewl.starter.model.Model.AppEventType
+import org.smithandrewl.starter.model.Model.AppEventType.AppEventType
+import org.smithandrewl.starter.model.Model.AppSection.AppSection
+import org.smithandrewl.starter.model.Model._
 import slick.ast.ColumnOption.PrimaryKey
 import slick.driver.PostgresDriver
 import slick.driver.PostgresDriver.api._
 import slick.lifted.{TableQuery, Tag}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future}
 
 object tables {
 
@@ -114,11 +118,11 @@ object tables {
     }
 
     def logAdminClearEventLog(userId: Int): EventInsertFuture = {
-      logEvent(userId, AppEventType.App, AppSection.Admin, ClearEventLog, ActionSuccess, Major)
+      logEvent(userId, AppEventType.App, AppSection.Admin, AppAction.ClearEventLog, ActionSuccess, Major)
     }
 
     def logAdminListUsers(userId: Int): EventInsertFuture = {
-      logEvent(userId, AppEventType.App, Admin, ListUsers, ActionNormal, Normal)
+      logEvent(userId, AppEventType.App, AppSection.Admin, ListUsers, ActionNormal, Normal)
     }
 
     // TODO: logUserLogin should log the user id of the user or a null if the username does not exist
@@ -126,13 +130,13 @@ object tables {
       val actionResult = if(success) ActionSuccess else ActionFailure
       val sev = if(success) Normal else Minor
 
-      logEvent(1, AppEventType.Auth, Login, UserLogin, actionResult, sev)
+      logEvent(1, AppEventType.Auth, AppSection.Login, UserLogin, actionResult, sev)
     }
 
     def logDeleteUser(userId: Int, worked: Boolean): EventInsertFuture = {
       val success = if(worked) ActionSuccess else ActionFailure
 
-      logEvent(userId, AppEventType.App, Admin, DeleteUser, success, Major)
+      logEvent(userId, AppEventType.App, AppSection.Admin, DeleteUser, success, Major)
     }
 
     def insertAppEvent(event: AppEvent)(implicit e:ExecutionContext): EventInsertFuture = {

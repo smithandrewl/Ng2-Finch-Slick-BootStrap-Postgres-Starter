@@ -1,7 +1,8 @@
+package org.smithandrewl.starter.auth
+
 import java.math.BigInteger
 import java.security.SecureRandom
 
-import Model.JwtPayload
 import cats.data.Xor
 import io.circe.generic.auto._
 import io.circe.jawn._
@@ -9,6 +10,7 @@ import io.circe.syntax._
 import org.jose4j.jws.{AlgorithmIdentifiers, JsonWebSignature}
 import org.jose4j.keys.HmacKey
 import org.jose4j.lang.JoseException
+import org.smithandrewl.starter.model.Model.JwtPayload
 
 object Authentication {
 

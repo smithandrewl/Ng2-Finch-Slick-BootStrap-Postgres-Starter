@@ -1,8 +1,8 @@
-import Model.{AppEvent, JwtPayload, _}
+package org.smithandrewl.starter.json
 
-import io.circe.{Encoder, Json, JsonObject}
-import io.circe.Decoder
 import io.circe.syntax._
+import io.circe.{Decoder, Encoder, Json, JsonObject}
+import org.smithandrewl.starter.model.Model._
 
 import scala.util.Try
 
@@ -55,6 +55,8 @@ object JsonCodecs {
     }
   }
 
+
+
   implicit val appEventEncoder = new Encoder[AppEvent] {
     override def apply(event: AppEvent): Json = Encoder.encodeJsonObject{
       JsonObject.fromMap{
@@ -68,6 +70,12 @@ object JsonCodecs {
           "Action"    -> appActionEncoder(event.appAction)
         )
       }
+    }
+  }
+
+  implicit val appEventSeqEncoder = new Encoder[Seq[AppEvent]] {
+    override def apply(a: Seq[AppEvent]): Json = {
+      Json.fromValues(a.map(_.asJson))
     }
   }
 }

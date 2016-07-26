@@ -1,4 +1,5 @@
-import Authentication.{AuthFailure, AuthSuccess, AuthenticationResult}
+package org.smithandrewl.starter
+
 import com.twitter.bijection.Bijection
 import com.twitter.bijection.twitter_util.UtilBijections._
 import com.twitter.finagle.Http
@@ -6,18 +7,22 @@ import com.twitter.finagle.http.filter.Cors
 import com.twitter.finagle.param.Stats
 import com.twitter.server.TwitterServer
 import com.twitter.util.{Future => TwitterFuture}
-import tables._
+import io.circe.generic.auto._
+import io.circe.syntax._
+import io.finch._
+import org.jboss.netty.handler.codec.http.HttpHeaders._
+import org.smithandrewl.starter.auth.Authentication.{AuthFailure, AuthSuccess, AuthenticationResult}
+import org.smithandrewl.starter.model.Model.{AppEvent, Auth}
+import org.smithandrewl.starter.auth.Authentication
+import org.smithandrewl.starter.db.tables
+import org.smithandrewl.starter.filter.AuthenticationFilter
+import org.smithandrewl.starter.json.JsonCodecs
+import org.smithandrewl.starter.db.tables.AppEventDAO
+import org.smithandrewl.starter.util.Routes
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
-import io.circe.generic.auto._
-import io.circe.syntax._
-import io.finch._
-import Model._
-import org.jboss.netty.handler.codec.http.HttpHeaders._
-import JsonCodecs._
-import com.twitter.logging.Logger
 
 
 
@@ -104,7 +109,7 @@ object Main extends TwitterServer  {
 
         log.debug(s"User with UID = $userId listed events")
 
-        Ok(events.map(events => events.asJson.toString()))
+        Ok(events.map(events => events.asJson(org.smithandrewl.starter.json.JsonCodecs.appEventSeqEncoder).toString()))
       }
     }
 

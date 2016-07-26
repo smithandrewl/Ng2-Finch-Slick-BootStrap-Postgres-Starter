@@ -1,10 +1,12 @@
-import Model.AppAction.AppAction
-import Model.AppActionResult.AppActionResult
-import Model.AppEventSeverity.AppEventSeverity
-import Model.AppEventType.AppEventType
-import Model.AppSection.AppSection
+package org.smithandrewl.starter.model
 
 import java.sql.Timestamp
+
+import org.smithandrewl.starter.model.Model.AppAction.AppAction
+import org.smithandrewl.starter.model.Model.AppActionResult.AppActionResult
+import org.smithandrewl.starter.model.Model.AppEventSeverity.AppEventSeverity
+import org.smithandrewl.starter.model.Model.AppEventType.AppEventType
+import org.smithandrewl.starter.model.Model.AppSection.AppSection
 
 object Model {
   case class Auth(userId: Int, username: String, hash: String, isAdmin: Boolean)

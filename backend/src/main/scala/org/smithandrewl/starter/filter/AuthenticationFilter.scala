@@ -1,7 +1,10 @@
+package org.smithandrewl.starter.filter
+
 import com.twitter.finagle.http.{Fields, Request, Response}
 import com.twitter.finagle.{Filter, Service}
 import com.twitter.util.Future
 import org.jose4j.lang.JoseException
+import org.smithandrewl.starter.auth.Authentication
 
 class AuthenticationFilter()
     extends Filter[Request, Response, Request, Response] {
