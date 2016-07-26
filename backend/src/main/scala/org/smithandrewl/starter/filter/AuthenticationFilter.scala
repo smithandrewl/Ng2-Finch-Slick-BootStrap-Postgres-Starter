@@ -4,7 +4,7 @@ import com.twitter.finagle.http.{Fields, Request, Response}
 import com.twitter.finagle.{Filter, Service}
 import com.twitter.util.Future
 import org.jose4j.lang.JoseException
-import org.smithandrewl.starter.auth.Authentication
+import org.smithandrewl.starter.auth
 
 class AuthenticationFilter()
     extends Filter[Request, Response, Request, Response] {
@@ -29,9 +29,9 @@ class AuthenticationFilter()
       val resp = req.response
 
       try {
-        val invalid = !(isPresent && Authentication.verifyJWT(jwt))
+        val invalid = !(isPresent && auth.verifyJWT(jwt))
 
-        val jwtPayload = Authentication.extractPayload(jwt)
+        val jwtPayload = auth.extractPayload(jwt)
 
         val nonAdminRoute: Boolean =
           nonAdminRoutes.exists((route: String) => path.startsWith(route))
