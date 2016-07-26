@@ -15,10 +15,13 @@ import slick.driver.PostgresDriver
 import slick.driver.PostgresDriver.api._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{Awaitable, ExecutionContext, Future}
 
 object AppEventDAO {
+  def logAdminCreateUserEvent(userId: Int): EventInsertFuture = {
+    logEvent(userId, AppEventType.App, AppSection.Admin, AppAction.CreateUser, AppActionResult.ActionSuccess, AppEventSeverity.Major)
+  }
+
   type EventInsertFuture = Future[PostgresDriver.InsertActionExtensionMethods[EventTable#TableElementType]#SingleInsertResult]
 
   def clearAppEvents()(implicit e:ExecutionContext): Future[Int] = db.run(events.delete)

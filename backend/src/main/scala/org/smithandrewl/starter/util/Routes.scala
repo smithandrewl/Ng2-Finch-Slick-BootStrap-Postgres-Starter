@@ -6,4 +6,5 @@ object Routes {
   val ListUsers     = "users"
   val ClearEventLog = "cleareventlog"
   val DeleteUser    = "deleteuser"
+  val CreateUser    = "createuser"
 }

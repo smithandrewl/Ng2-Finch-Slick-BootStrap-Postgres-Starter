@@ -126,13 +126,27 @@ object Main extends TwitterServer  {
       }
     }
 
+    val createUser: Endpoint[String] = get(Routes.CreateUser :: string :: string :: boolean :: header(Names.AUTHORIZATION)) {
+      (username: String, hash: String, isAdmin: Boolean, jwt: String) => {
+        val jwtPayload = auth.extractPayload(jwt)
+        val userId = jwtPayload.userId
+        Await.ready(AppEventDAO.logAdminCreateUserEvent(userId), Duration.Inf)
+
+        val result = Bijection[Future[Int], TwitterFuture[Int]](AuthDAO.insertUser(username, hash, isAdmin))
+
+        result.map{
+          r=> Ok("")
+        }
+
+      }
+    }
     val policy: Cors.Policy = Cors.Policy(
       allowsOrigin  = _ => Some("*"),
       allowsMethods = _ => Some(Seq("GET", "POST")),
       allowsHeaders = _ => Some(Seq(Names.ACCEPT, Names.AUTHORIZATION, Names.ACCESS_CONTROL_ALLOW_CREDENTIALS))
     )
 
-    val service     = (api :+: authenticate :+: verifyJWT :+: listEvents :+: clearEvents :+: deleteUser).toService
+    val service     = (api :+: authenticate :+: verifyJWT :+: listEvents :+: clearEvents :+: deleteUser :+: createUser).toService
     val corsService = new Cors.HttpFilter(policy).andThen(new AuthenticationFilter().andThen(service))
     val server      =  Http.server.configured(Stats(statsReceiver)).serve(":8080",  corsService )
 

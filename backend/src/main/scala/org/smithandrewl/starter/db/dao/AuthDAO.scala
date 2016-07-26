@@ -6,12 +6,17 @@ import org.smithandrewl.starter.auth.{AuthFailure, AuthSuccess, AuthenticationRe
 import org.smithandrewl.starter.db._
 import org.smithandrewl.starter.db.mapping._
 import org.smithandrewl.starter.model.Auth
+import slick.driver.PostgresDriver
 import slick.driver.PostgresDriver.api._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
 object AuthDAO {
+
+  def insertUser(username: String, hash: String, isAdmin: Boolean): Future[Int] = {
+    db.run(users += Auth(0, username, BCrypt.hashpw(hash, BCrypt.gensalt(10)), isAdmin))
+  }
   def deleteUser(id: Int): Future[Int] = {
     db.run(users.filter(_.authId === id).delete)
   }

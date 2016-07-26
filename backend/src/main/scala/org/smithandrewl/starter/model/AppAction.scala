@@ -8,4 +8,5 @@ object AppAction extends Enumeration {
   val UserLogout    = Value(3)
   val ClearEventLog = Value(4)
   val DeleteUser    = Value(5)
+  val CreateUser    = Value(6)
 }

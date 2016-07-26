@@ -87,6 +87,7 @@ INSERT INTO AppAction (label) VALUES ('USER_LOGIN');
 INSERT INTO AppAction (label) VALUES ('USER_LOGOUT');
 INSERT INTO AppAction (label) VALUES ('CLEAR_EVENT_LOG');
 INSERT INTO AppAction (label) VALUES ('DELETE_USER');
+INSERT INTO AppAction (label) VALUES ('CREATE_USER');
 
 INSERT INTO AppActionResult (label) VALUES ('ACTION_SUCCESS');
 INSERT INTO AppActionResult (label) VALUES ('ACTION_FAILURE');
