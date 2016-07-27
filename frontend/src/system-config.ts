@@ -38,6 +38,7 @@ const barrels: string[] = [
   'app/admin-user-list',
   'app/event-list',
   'app/home',
+  'app/admin-create-user',
   /** @cli-barrel */
 ];
 

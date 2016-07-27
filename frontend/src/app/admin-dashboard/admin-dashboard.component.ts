@@ -5,6 +5,7 @@ import {EventListComponent} from "../event-list/event-list.component";
 import {LoginCheck} from "../login-check.directive";
 import {AdminCheck} from "../admin-check.directive";
 import {AuthenticationService} from "../authentication.service";
+import {DataServiceService} from "../data-service.service";
 
 @Component({
     moduleId: module.id,
@@ -12,11 +13,11 @@ import {AuthenticationService} from "../authentication.service";
     templateUrl: 'admin-dashboard.component.html',
     styleUrls: ['admin-dashboard.component.css'],
     directives: [AdminUserListComponent, EventListComponent, LoginCheck, AdminCheck],
-    providers: [AuthenticationService]
+    providers: [AuthenticationService, DataServiceService]
 })
 export class AdminDashboardComponent implements OnInit {
 
-    constructor(private routingService:RoutingService) {
+    constructor(private dataService: DataServiceService, private routingService: RoutingService) {
 
     }
 

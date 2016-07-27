@@ -28,4 +28,8 @@ export class DataServiceService {
   deleteUser(id: number){
     return this.http.get("/api/deleteuser/" + id, {headers: this.getHeaders()});
   }
+
+  createUser(username: String, password: String, isAdmin: boolean) {
+    return this.http.get("/api/createuser/" + username + "/" + password + "/" + isAdmin, {headers: this.getHeaders()});
+  }
 }

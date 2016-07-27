@@ -1,0 +1,43 @@
+
+<div class="panel panel-info">
+  <div class="panel-heading  text-center">
+    <div class="panel-title"><h1>MyApp</h1></div>
+  </div>
+</div>
+<div class="container" login-check >
+  <div class="panel panel-primary login-panel" admin-check>
+    <div class="panel-heading">
+      <div class="panel-title">Add User</div>
+    </div>
+    <div class="panel-body">
+      <div class="btn btn-primary"  (click) = "clicked()">Back</div>
+
+      <app-admin-user-list></app-admin-user-list>
+      <br/>
+      <br/>
+
+      <form id="form-add-user">
+        <div class="input-group">
+          <label for="inputUsername" class="sr-only">Username</label>
+          <span class="input-group-addon" ><div class="mdi mdi-account"></div></span>
+          <input [(ngModel)]="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        </div>
+
+        <br/>
+        <div class="input-group">
+          <label for="inputPassword" class="sr-only">Password</label>
+          <span class="input-group-addon"><div class="mdi mdi-key"></div></span>
+          <input [(ngModel)]="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        </div>
+        <br/>
+        <div class="input-group">
+          <label for="checkBoxAdmin">Admin</label>
+          <input [(ngModel)]="isAdmin" type="checkbox" id="checkBoxAdmin" class="form-control" placeholder="IsAdmin">
+        </div>
+        <br/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="add()">Add</button>
+        <br/>
+      </form>
+    </div>
+  </div>
+</div>

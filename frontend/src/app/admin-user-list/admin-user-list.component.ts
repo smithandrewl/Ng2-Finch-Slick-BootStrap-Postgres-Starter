@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import {DataServiceService} from "../data-service.service";
+import {RoutingService} from "../routing.service";
 
 @Component({
   moduleId: module.id,
@@ -13,7 +14,7 @@ export class AdminUserListComponent implements OnInit {
 
   private userData: any;
 
-  constructor(private dataService: DataServiceService) {
+  constructor(private dataService: DataServiceService, private routingService:RoutingService) {
     this.userData = [];
   }
 
@@ -33,6 +34,11 @@ export class AdminUserListComponent implements OnInit {
   private delete(userId: number)  {
     this.dataService.deleteUser(userId).subscribe(this.onDelete);
   }
+
+  createUser() {
+    this.routingService.changeRoute('/create-user');
+  }
+
 
 
 }
