@@ -3,6 +3,7 @@ import {DataServiceService} from "../data-service.service";
 import {RoutingService} from "../routing.service";
 import {Response} from "@angular/http";
 import {Observable} from "rxjs/Rx";
+import {SiteHeadingComponent} from "../site-heading/site-heading.component";
 
 
 @Component({
@@ -10,6 +11,7 @@ import {Observable} from "rxjs/Rx";
   selector: 'app-admin-create-user',
   templateUrl: 'admin-create-user.component.html',
   styleUrls: ['admin-create-user.component.css'],
+  directives: [SiteHeadingComponent],
   providers: [DataServiceService]
 })
 export class AdminCreateUserComponent implements OnInit {

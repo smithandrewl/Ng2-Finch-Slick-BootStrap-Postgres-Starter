@@ -6,13 +6,14 @@ import {LoginCheck} from "../login-check.directive";
 import {AdminCheck} from "../admin-check.directive";
 import {AuthenticationService} from "../authentication.service";
 import {DataServiceService} from "../data-service.service";
+import {SiteHeadingComponent} from "../site-heading/site-heading.component";
 
 @Component({
     moduleId: module.id,
     selector: 'app-admin-dashboard',
     templateUrl: 'admin-dashboard.component.html',
     styleUrls: ['admin-dashboard.component.css'],
-    directives: [AdminUserListComponent, EventListComponent, LoginCheck, AdminCheck],
+    directives: [AdminUserListComponent, EventListComponent, LoginCheck, AdminCheck, SiteHeadingComponent],
     providers: [AuthenticationService, DataServiceService]
 })
 export class AdminDashboardComponent implements OnInit {
