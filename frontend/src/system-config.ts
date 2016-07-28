@@ -4,11 +4,16 @@
 /** Map relative paths to URLs. */
 const map: any = {
   'angular2-jwt': 'vendor/angular2-jwt/angular2-jwt.js',
+  'moment': 'vendor/moment/min/moment.min.js',
+  'ng2-bootstrap': 'vendor/ng2-bootstrap'
 };
 
 /** User packages configuration. */
 const packages: any = {
-
+// ng2-bootstrap packages
+  'vendor/ng2-bootstrap': {
+    defaultExtension: 'js'
+  }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,9 +29,13 @@ const barrels: string[] = [
   '@angular/router',
   '@angular/platform-browser',
   '@angular/platform-browser-dynamic',
+  '@angular/platform-browser',
+  '@angular/platform-browser-dynamic',
+  '@angular/forms',
 
   // Thirdparty barrels.
   'rxjs',
+  'ng2-bootstrap',
 
   // App specific barrels.
   'app',
@@ -55,6 +64,7 @@ declare var System: any;
 System.config({
   map: {
     '@angular': 'vendor/@angular',
+    '@angular/forms': 'vendor/@angular/forms',
     'rxjs': 'vendor/rxjs',
     'main': 'main.js'
   },

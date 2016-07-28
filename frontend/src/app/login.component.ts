@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import {RoutingService} from './routing.service';
 import {JwtHelper} from 'angular2-jwt/';
 import {Form} from "@angular/common";
+import {ProgressbarComponent} from "ng2-bootstrap/ng2-bootstrap";
 
 @Component({
   moduleId: module.id,
