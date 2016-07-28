@@ -6,13 +6,13 @@ import {
   expect, it, xit,
   async, inject
 } from '@angular/core/testing';
-import { DataServiceService } from './data-service.service';
+import { DataService } from './data-service.service';
 
 describe('DataService Service', () => {
-  beforeEachProviders(() => [DataServiceService]);
+  beforeEachProviders(() => [DataService]);
 
   it('should ...',
-      inject([DataServiceService], (service: DataServiceService) => {
+      inject([DataService], (service: DataService) => {
     expect(service).toBeTruthy();
   }));
 });

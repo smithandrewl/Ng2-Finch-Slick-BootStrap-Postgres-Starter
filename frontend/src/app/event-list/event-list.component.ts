@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import {DataServiceService} from "../data-service.service";
+import {DataService} from "../data-service.service";
 
 @Component({
   moduleId: module.id,
   selector: 'app-event-list',
   templateUrl: 'event-list.component.html',
   styleUrls: ['event-list.component.css'],
-  providers: [DataServiceService]
+  providers: [DataService]
 })
 export class EventListComponent implements OnInit {
 
   private eventData: any;
-  constructor(private dataService: DataServiceService) {
+  constructor(private dataService: DataService) {
     this.eventData = [];
   }
 

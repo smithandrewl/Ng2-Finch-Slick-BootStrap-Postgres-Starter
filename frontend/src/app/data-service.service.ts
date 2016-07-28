@@ -3,7 +3,7 @@ import {Http, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs/Rx";
 
 @Injectable()
-export class DataServiceService {
+export class DataService {
 
   constructor(public http: Http) {}
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DataServiceService} from "../data-service.service";
+import {DataService} from "../data-service.service";
 import {RoutingService} from "../routing.service";
 import {Response} from "@angular/http";
 import {Observable} from "rxjs/Rx";
@@ -12,11 +12,11 @@ import {SiteHeadingComponent} from "../site-heading/site-heading.component";
   templateUrl: 'admin-create-user.component.html',
   styleUrls: ['admin-create-user.component.css'],
   directives: [SiteHeadingComponent],
-  providers: [DataServiceService]
+  providers: [DataService]
 })
 export class AdminCreateUserComponent implements OnInit {
 
-  constructor(private dataService: DataServiceService, private routingService: RoutingService) {
+  constructor(private dataService: DataService, private routingService: RoutingService) {
 
   }
 

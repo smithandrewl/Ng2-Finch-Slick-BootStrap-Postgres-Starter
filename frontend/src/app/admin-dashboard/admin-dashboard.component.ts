@@ -5,7 +5,7 @@ import {EventListComponent} from "../event-list/event-list.component";
 import {LoginCheck} from "../login-check.directive";
 import {AdminCheck} from "../admin-check.directive";
 import {AuthenticationService} from "../authentication.service";
-import {DataServiceService} from "../data-service.service";
+import {DataService} from "../data-service.service";
 import {SiteHeadingComponent} from "../site-heading/site-heading.component";
 
 @Component({
@@ -14,11 +14,11 @@ import {SiteHeadingComponent} from "../site-heading/site-heading.component";
     templateUrl: 'admin-dashboard.component.html',
     styleUrls: ['admin-dashboard.component.css'],
     directives: [AdminUserListComponent, EventListComponent, LoginCheck, AdminCheck, SiteHeadingComponent],
-    providers: [AuthenticationService, DataServiceService]
+    providers: [AuthenticationService, DataService]
 })
 export class AdminDashboardComponent implements OnInit {
 
-    constructor(private dataService: DataServiceService, private routingService: RoutingService) {
+    constructor(private dataService: DataService, private routingService: RoutingService) {
 
     }
 

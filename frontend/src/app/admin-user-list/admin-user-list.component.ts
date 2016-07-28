@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import {DataServiceService} from "../data-service.service";
+import {DataService} from "../data-service.service";
 import {RoutingService} from "../routing.service";
 
 @Component({
@@ -8,13 +8,13 @@ import {RoutingService} from "../routing.service";
   selector: 'app-admin-user-list',
   templateUrl: 'admin-user-list.component.html',
   styleUrls: ['admin-user-list.component.css'],
-  providers: [DataServiceService]
+  providers: [DataService]
 })
 export class AdminUserListComponent implements OnInit {
 
   private userData: any;
 
-  constructor(private dataService: DataServiceService, private routingService:RoutingService) {
+  constructor(private dataService: DataService, private routingService:RoutingService) {
     this.userData = [];
   }
 
