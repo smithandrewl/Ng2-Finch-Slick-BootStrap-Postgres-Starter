@@ -1,6 +1,27 @@
 
+<div class="modal fade bs-clear-event-log-warning" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><i class="mdi mdi-alert-outline"></i>&nbsp;Clear Event Log?</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to clear the event log?
+        </p>
+        <p> This will delete all of the events and cannot be undone!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click) = "clear()">Clear Events</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="panel panel-default">
-  <div class="panel-heading">Events <button class="btn btn-danger btn-xs pull-right" (click) = "clear()">Clear All Logs</button> </div>
+  <div class="panel-heading">Events <button class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target=".bs-clear-event-log-warning">Clear All Logs</button> </div>
   <div class="panel-body">
 
     <table class="table">
