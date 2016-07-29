@@ -9,6 +9,9 @@ import org.smithandrewl.starter.model.AppSection.{apply => _, _}
 import slick.lifted.TableQuery
 import slick.driver.PostgresDriver.api._
 
+/**
+  *
+  */
 package object mapping {
   val users  = TableQuery[AuthTable]
   val events = TableQuery[EventTable]

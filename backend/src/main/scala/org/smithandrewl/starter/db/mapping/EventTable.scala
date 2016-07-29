@@ -14,6 +14,10 @@ import slick.lifted.Tag
 import org.smithandrewl.starter.db._
 import org.smithandrewl.starter.db.mapping._
 
+/**
+  * Slick database table mapping for the [[org.smithandrewl.starter.model.AppEventType AppEventType]] class
+  * @param tag
+  */
 class EventTable(tag: Tag) extends Table[AppEvent](tag, "appevent") {
   def timestamp        = column[Timestamp]       ("timestamp")
   def userId           = column[Int]             ("userid")

@@ -22,8 +22,20 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
+/**
+  * The REST API server.
+  */
 object Main extends TwitterServer  {
+  /**
+    * The main method.
+    */
   def main() {
+
+    /**
+      * The finch endpoint handling user deletion.
+      *
+      * Expects a user id parameter and an authorization header.
+      */
     val deleteUser:Endpoint[String] = get(Routes.DeleteUser :: int::header(Names.AUTHORIZATION)) {
       (id: Int, jwt: String) => {
 
@@ -53,6 +65,13 @@ object Main extends TwitterServer  {
         }
       }
     }
+
+    /**
+      * The finch endpoint for listing user accounts.
+      *
+      * Expects an authorization header.
+      *
+      */
     val api: Endpoint[String] = get(Routes.ListUsers :: header( Names.AUTHORIZATION)) {
 
       (jwt: String) => {
@@ -67,10 +86,20 @@ object Main extends TwitterServer  {
       }
     }
 
+    /**
+      * A finch endpoint for verifying jwt tokens.
+      *
+      * Expects the compact form of a jwt token.
+      */
     val verifyJWT: Endpoint[String] = get("verify_jwt" :: string) {
       (jwt: String) => Ok("" + auth.verifyJWT(jwt))
     }
 
+    /**
+      * The finch endpoint which handler user logins.
+      *
+      * Expects a username and password.
+      */
     val authenticate: Endpoint[String] = get(Routes.Authenticate :: string :: string) {
       (username: String, hash: String) => {
         Bijection[Future[AuthenticationResult], TwitterFuture[AuthenticationResult]](AuthDAO.login(username, hash)).map {
@@ -94,6 +123,11 @@ object Main extends TwitterServer  {
       }
     }
 
+    /**
+      * The finch endpoint for listing events from the event log.
+      *
+      * Expects an authorization header.
+      */
     val listEvents: Endpoint[String] = get(Routes.ListEvents :: header(Names.AUTHORIZATION)) {
 
       (jwt: String) => {
@@ -109,6 +143,11 @@ object Main extends TwitterServer  {
       }
     }
 
+    /**
+      * The finch endpoint for clearing the event log.
+      *
+      * Expects an authorization header.
+      */
     val clearEvents: Endpoint[String] = get(Routes.ClearEventLog :: header(Names.AUTHORIZATION)) {
       (jwt: String) => {
         val result = Bijection[Future[Int], TwitterFuture[Int]](AppEventDAO.clearAppEvents())
@@ -126,6 +165,12 @@ object Main extends TwitterServer  {
       }
     }
 
+    /**
+      * The finch endpoint for creating a user account.
+      *
+      * Expects a username, password, admin status and an authorization header.
+      *
+      */
     val createUser: Endpoint[String] = get(Routes.CreateUser :: string :: string :: boolean :: header(Names.AUTHORIZATION)) {
       (username: String, hash: String, isAdmin: Boolean, jwt: String) => {
         val jwtPayload = auth.extractPayload(jwt)
@@ -137,9 +182,12 @@ object Main extends TwitterServer  {
         result.map{
           r=> Ok("")
         }
-
       }
     }
+
+    /**
+      * Adds the CORS headers necessary for REST API calls.
+      */
     val policy: Cors.Policy = Cors.Policy(
       allowsOrigin  = _ => Some("*"),
       allowsMethods = _ => Some(Seq("GET", "POST")),

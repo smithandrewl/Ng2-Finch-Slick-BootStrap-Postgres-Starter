@@ -3,6 +3,9 @@ package org.smithandrewl.starter
 import com.twitter.logging.Logger
 import slick.driver.PostgresDriver.api._
 
+/**
+  * Hold state for the database code.
+  */
 package object db {
   val logger = Logger("tables")
 

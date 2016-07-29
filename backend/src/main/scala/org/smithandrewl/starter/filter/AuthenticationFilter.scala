@@ -6,6 +6,9 @@ import com.twitter.util.Future
 import org.jose4j.lang.JoseException
 import org.smithandrewl.starter.auth
 
+/**
+  * Verifies that a user is authorized to access the REST API that they are calling.
+  */
 class AuthenticationFilter()
     extends Filter[Request, Response, Request, Response] {
 

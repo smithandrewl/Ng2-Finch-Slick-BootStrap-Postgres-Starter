@@ -1,5 +1,8 @@
 package org.smithandrewl.starter.model
 
+/**
+  *
+  */
 object AppSection extends Enumeration {
   type AppSection = Value
 
