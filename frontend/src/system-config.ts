@@ -5,7 +5,7 @@
 const map: any = {
   'angular2-jwt': 'vendor/angular2-jwt/angular2-jwt.js',
   'moment': 'vendor/moment/min/moment.min.js',
-  'ng2-bootstrap': 'vendor/ng2-bootstrap'
+  'ng2-bootstrap': 'vendor/ng2-bootstrap/ng2-bootstrap'
 };
 
 /** User packages configuration. */

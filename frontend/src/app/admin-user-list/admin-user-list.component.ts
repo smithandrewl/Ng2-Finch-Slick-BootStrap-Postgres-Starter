@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import {DataService} from "../data-service.service";
 import {RoutingService} from "../routing.service";
+import {CORE_DIRECTIVES} from '@angular/common';
 
 @Component({
   moduleId: module.id,
@@ -11,7 +12,6 @@ import {RoutingService} from "../routing.service";
   providers: [DataService]
 })
 export class AdminUserListComponent implements OnInit {
-
   private userData: any;
 
   constructor(private dataService: DataService, private routingService:RoutingService) {
