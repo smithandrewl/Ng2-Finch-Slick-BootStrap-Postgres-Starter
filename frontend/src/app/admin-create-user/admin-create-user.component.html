@@ -1,19 +1,18 @@
 <app-site-heading></app-site-heading>
 <div class="container" login-check >
-  <div class="panel panel-primary login-panel" admin-check>
+  <div id="panel-add-user" class="panel panel-primary login-panel" admin-check>
     <div class="panel-heading">
       <div class="panel-title">Add User</div>
     </div>
     <div class="panel-body">
       <div class="btn btn-primary"  (click) = "clicked()">Back</div>
-
-      <app-admin-user-list></app-admin-user-list>
       <br/>
       <br/>
 
-      <form id="form-add-user">
+      <form id="form-add-user" >
         <div class="input-group">
           <label for="inputUsername" class="sr-only">Username</label>
+
           <span class="input-group-addon" ><div class="mdi mdi-account"></div></span>
           <input [(ngModel)]="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         </div>
@@ -30,7 +29,8 @@
           <input [(ngModel)]="isAdmin" type="checkbox" id="checkBoxAdmin" class="form-control" placeholder="IsAdmin">
         </div>
         <br/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="add()">Add</button>
+            <button id="btnSubmit" class="btn btn-lg btn-primary btn-block" type="submit" (click)="add()">Add</button>
+
         <br/>
       </form>
     </div>
