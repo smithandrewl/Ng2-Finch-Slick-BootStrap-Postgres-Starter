@@ -5,12 +5,14 @@ import {RoutingService} from './routing.service';
 import {JwtHelper} from 'angular2-jwt/';
 import {Form} from "@angular/common";
 import {ProgressbarComponent} from "ng2-bootstrap/ng2-bootstrap";
+import {DataService} from "./data-service.service";
 
 @Component({
   moduleId: module.id,
   selector: 'frontend-app',
   templateUrl: 'login.component.html',
-  styleUrls: ['login.component.css']
+  styleUrls: ['login.component.css'],
+  providers: [DataService]
 })
 export class LoginAppComponent {
   username = '';
@@ -18,7 +20,7 @@ export class LoginAppComponent {
   response = '';
   wasError = 'hidden';
   isHidden = '';
-  constructor(private routingService: RoutingService, public http: Http) {}
+  constructor(private dataService: DataService,  private routingService: RoutingService, public http: Http) {}
 
   onClickSubmit() {
 
@@ -26,7 +28,7 @@ export class LoginAppComponent {
     var form: HTMLFormElement = <HTMLFormElement>document.getElementById('login-form');
 
     if(form.checkValidity()) {
-      this.http.get("/api/authenticate/" + this.username + "/" + this.password).subscribe(
+      this.dataService.login(this.username, this.password).subscribe(
           this.auth,
           error => {
             this.response = "Unable to contact server";

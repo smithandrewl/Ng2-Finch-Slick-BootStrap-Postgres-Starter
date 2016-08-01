@@ -32,4 +32,8 @@ export class DataService {
   createUser(username: String, password: String, isAdmin: boolean) {
     return this.http.get("/api/createuser/" + username + "/" + password + "/" + isAdmin, {headers: this.getHeaders()});
   }
+
+  login(username: String, password: String): Observable<Response> {
+    return this.http.get("/api/authenticate/" + username + "/" + password)
+  }
 }
