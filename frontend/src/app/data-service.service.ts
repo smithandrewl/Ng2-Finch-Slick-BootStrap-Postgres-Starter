@@ -5,10 +5,18 @@ import {Observable} from "rxjs/Rx";
 @Injectable()
 export class DataService {
 
-  constructor(public http: Http) {}
+  private baseUrl: string;
+
+  constructor(public http: Http) {
+    this.baseUrl = "http://" + window.location.hostname + ":8080/";
+  }
+
+  private getUrl(endpoint: string): string {
+    return this.baseUrl + endpoint;
+  }
 
   getEvents(): Observable<Response> {
-    return this.http.get("/api/events", {headers: this.getHeaders()});
+    return this.http.get(this.getUrl("events"), {headers: this.getHeaders()});
   }
 
   private getHeaders() {
@@ -18,22 +26,22 @@ export class DataService {
   }
 
   getUsers(): Observable<Response> {
-    return this.http.get("/api/users", {headers: this.getHeaders()});
+    return this.http.get(this.getUrl("users"), {headers: this.getHeaders()});
     }
 
     clearEventLogs() {
-      return this.http.get("/api/cleareventlog", {headers: this.getHeaders()});
+      return this.http.get(this.getUrl("cleareventlog"), {headers: this.getHeaders()});
   }
 
   deleteUser(id: number){
-    return this.http.get("/api/deleteuser/" + id, {headers: this.getHeaders()});
+    return this.http.get(this.getUrl("deleteuser/" + id), {headers: this.getHeaders()});
   }
 
   createUser(username: String, password: String, isAdmin: boolean) {
-    return this.http.get("/api/createuser/" + username + "/" + password + "/" + isAdmin, {headers: this.getHeaders()});
+    return this.http.get(this.getUrl("createuser/" + username + "/" + password + "/" + isAdmin), {headers: this.getHeaders()});
   }
 
   login(username: String, password: String): Observable<Response> {
-    return this.http.get("/api/authenticate/" + username + "/" + password)
+    return this.http.get(this.getUrl("authenticate/" + username + "/" + password));
   }
 }
